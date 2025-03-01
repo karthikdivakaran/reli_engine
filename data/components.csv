@@ -1,0 +1,9 @@
+id,name,type,reference,refFIT,theetta1
+1,resistors,carbon film,less 100,0.3,55
+2,resistors,carbon film,great 100,1,55
+3,resistors,metal film ,nil,0.2,55
+4,resistors,film circuits,standard,0.1,55
+5,resistors,film circuits,custom design,0.5,55
+6,resistors,metal oxide,nil,5,85
+7,resistors,wire wound,nil,5,85
+8,resistors,variable,nil,30,55
