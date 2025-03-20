@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>RAFRC</class>
+ <widget class="QMainWindow" name="RAFRC">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>549</width>
-    <height>479</height>
+    <width>824</width>
+    <height>608</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>RAFRC</string>
+  </property>
+  <property name="windowOpacity">
+   <double>4.000000000000000</double>
+  </property>
+  <property name="toolTipDuration">
+   <number>1</number>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="loginButton">
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>170</y>
+      <y>240</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -27,50 +33,50 @@
      <string>Login</string>
     </property>
    </widget>
+   <widget class="QLineEdit" name="uemailID">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>160</y>
+      <width>181</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>90</y>
-      <width>51</width>
+      <y>160</y>
+      <width>81</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>User Name</string>
+     <string>User Email-ID</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="uPassword">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>200</y>
+      <width>181</width>
+      <height>20</height>
+     </rect>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>130</y>
-      <width>51</width>
+      <y>200</y>
+      <width>61</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>Password</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="loginName">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>90</y>
-      <width>181</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="loginPassword">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>130</y>
-      <width>181</width>
-      <height>20</height>
-     </rect>
     </property>
    </widget>
   </widget>
@@ -79,7 +85,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>549</width>
+     <width>824</width>
      <height>21</height>
     </rect>
    </property>

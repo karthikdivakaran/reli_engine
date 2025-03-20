@@ -81,7 +81,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="addUserButton">
+  <widget class="QPushButton" name="updateUserButton">
    <property name="geometry">
     <rect>
      <x>270</x>
@@ -91,7 +91,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Add User</string>
+    <string>Update User</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
@@ -176,7 +176,7 @@
   <tabstop>userPwd</tabstop>
   <tabstop>emailID</tabstop>
   <tabstop>userRolecombo</tabstop>
-  <tabstop>addUserButton</tabstop>
+  <tabstop>updateUserButton</tabstop>
   <tabstop>backBtn</tabstop>
  </tabstops>
  <resources/>
