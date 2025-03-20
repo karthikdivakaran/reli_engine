@@ -1,34 +1,62 @@
 import sys
 from PyQt5 import QtWidgets, uic
-from controllers import home_controller
+from database.db_connection import get_connection  # Assume this function connects to your DB
+# from main_page import MainWindow  # Import the MainWindow for home
+from main_page import MainWindow
 
 
-class MainWindow(QtWidgets.QMainWindow):
+class LoginWindow(QtWidgets.QMainWindow):
     def __init__(self):
-        super(MainWindow, self).__init__()
+        super(LoginWindow, self).__init__()
         # Load the UI file
-        uic.loadUi("gui/home.ui", self)
-        # Example: Connect a button clicked signal
-        self.projectsBtn.clicked.connect(self.handle_project_click)
-        self.componentBtn.clicked.connect(self.handle_component_click)
-        self.calculationBtn.clicked.connect(self.handle_calculation_eng)
-        self.userManagementBtn.clicked.connect(self.handle_users)
+        uic.loadUi("gui/login.ui", self)
 
-    def handle_project_click(self):
-        home_controller.handle_project_btn(self)
+        # Connect the login button to the handler
+        self.loginButton = self.findChild(QtWidgets.QPushButton, "loginButton")  # Adjust the button name
+        self.usernameInput = self.findChild(QtWidgets.QLineEdit, "uemailID")  # Adjust the field name
+        self.passwordInput = self.findChild(QtWidgets.QLineEdit, "uPassword")  # Adjust the field name
+        self.loginButton.clicked.connect(self.handle_login)
 
-    def handle_component_click(self):
-        home_controller.handle_component_btn(self)
+    def handle_login(self):
+        username = self.usernameInput.text()
+        password = self.passwordInput.text()
 
-    def handle_calculation_eng(self):
-        home_controller.handle_calc_btn(self)
+        # Validate the inputs
+        if not username or not password:
+            QtWidgets.QMessageBox.warning(self, "Login Failed", "Username and password cannot be empty.")
+            return
 
-    def handle_users(self):
-        home_controller.handle_users_btn(self)
+        # Check the database for user credentials
+        if self.validate_user(username, password):
+            # Login successful - Open home window
+            self.home_window = MainWindow(self)
+            self.home_window.show()
+            self.close()  # Close the login window
+        else:
+            # Login failed - Show error message
+            QtWidgets.QMessageBox.warning(self, "Login Failed", "Invalid username or password.")
+
+    @staticmethod
+    def validate_user(username, password):
+        """
+        Query the User table to validate username and password.
+        """
+        try:
+            conn = get_connection()
+            cursor = conn.cursor()
+            query = "SELECT * FROM User WHERE Email = ? AND Password = ?"
+            cursor.execute(query, (username, password))
+            result = cursor.fetchone()
+            conn.close()
+            return bool(result)  # True if user exists, False otherwise
+        except Exception as e:
+            print(f"Error validating user: {e}")
+            return False
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
+    # Start with LoginWindow
+    login_window = LoginWindow()
+    login_window.show()
     sys.exit(app.exec_())
