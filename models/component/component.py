@@ -1,5 +1,5 @@
 from PyQt5 import uic
-from PyQt5.QtWidgets import QTableWidgetItem, QWidget, QMessageBox, QPushButton, QMainWindow, QStyleOptionButton, QStyle
+from PyQt5.QtWidgets import QTableWidgetItem, QWidget, QMessageBox, QPushButton
 from PyQt5.QtCore import QAbstractTableModel, Qt
 from PyQt5.QtGui import QIcon
 from database.db_connection import get_connection
@@ -48,14 +48,27 @@ class ComponentsWindow(QWidget):
             # Edit button (✏️)
             edit_button = QPushButton()
             edit_button.setIcon(QIcon("static/icons/icons-edit.png"))
+            edit_button.setFixedSize(24, 24)
+            edit_button.setStyleSheet("border: none; padding: 0px;")
             edit_button.clicked.connect(lambda _, r=row: self.on_edit_click(r))
             self.table.setCellWidget(row, len(entry), edit_button)
 
             # Delete button (🗑️)
             delete_button = QPushButton()
             delete_button.setIcon(QIcon("static/icons/icons-delete.png"))
+            delete_button.setFixedSize(24, 24)
+            delete_button.setStyleSheet("border: none; padding: 0px;")
             delete_button.clicked.connect(lambda _, r=row: self.confirm_delete(r))  # FIXED LAMBDA ISSUE
             self.table.setCellWidget(row, len(entry) + 1, delete_button)
+
+            # Configure headers for better appearance
+            header = self.table.horizontalHeader()
+            # header.setSectionResizeMode(0, header.ResizeToContents)
+            header.setSectionResizeMode(1, header.Stretch)  # Stretch the last column
+            header.setSectionResizeMode(2, header.Stretch)  # Stretch the last column
+            header.setSectionResizeMode(3, header.Stretch)  # Stretch the last column
+            header.setSectionResizeMode(4, header.Stretch)  # Stretch the last column
+            header.setSectionResizeMode(6, header.Stretch)  # Stretch the last column
 
     def handle_create(self):
         # Navigate to the Components Create Window

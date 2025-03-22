@@ -1,4 +1,4 @@
-id,name,type,reference,refFIT,theetta1
+componentid,name,type,reference,λref,theetta1
 1,resistors,carbon film,less 100,0.3,55
 2,resistors,carbon film,great 100,1,55
 3,resistors,metal film ,nil,0.2,55
@@ -7,3 +7,32 @@ id,name,type,reference,refFIT,theetta1
 6,resistors,metal oxide,nil,5,85
 7,resistors,wire wound,nil,5,85
 8,resistors,variable,nil,30,55
+9,Transistors,"Bipolar, universal","TO18, TO92, SOT(D)(3)23/similar",3,55
+10,Transistors,Transistor arrays 1,nil,12,55
+11,Transistors,MOSFET,"TO5, T039, SOT223, SO8, SMA-SMC",200,125
+12,Plug-in contacts that must be inserted without electrical load,nil,nil,3,
+13,Memories,Bipolar RAM,Complexity in bits 32K - 64K,60,75
+14,Memories,ROM mask,Complexity in bits 128K - 256 K,15,55
+15,Memories,Flash,Complexity in bits 512K - 1M,30,55
+16,Memories,EEPROM,Complexity in bits 512K - 1M,50,55
+17,Analog integrated circuit,"Operational amplifiers,comparators and voltage monitors   - bipolar,BIFET",Degree of integration > 30- 300,5,55
+18,"Digital logic families and bus interfaces,busdriver and receiver circuit",CMOS B,"Degree of Integration LSI > 100, > 500",5,45
+19,Diodes,Universal diode,nil,1,55
+20,Diodes,Schottky diode,nil,1,55
+21,Diodes,Z - diode,nil,1,40
+22,power semiconductor,"Triac's,Diac's",nil,75,85
+23,power semiconductor,Thyristors,nil,50,85
+24,Capacitor,Metalized film,"U/Umax ≤ 0.1, Uref/Umax 0.5",0.7,40
+25,Capacitor,Ceramic,"U/Umax 0.7, Uref/Umax 0.5",1,40
+26,Capacitor,Metalized paper,"U/Umax 1, Uref/Umax 0.5",2,40
+27,Inductors,Inductors for EMC applications ≤ 3A,nil,1.5,60
+28,Inductors,Inductors for EMC applications >3A,nil,3,85
+29,Inductors,High frequency inductors and transforms,nil,5,55
+30,Solder,nil,nil,0.03,
+31,automotive relays,Plastic-sealed relays,F > 20  Cn ,0.5,
+32,automotive relays,Plastic-sealed relays,50 Cn <F < 100cN,1,
+33,Low-duty relays,Plastic-sealed relays with twin contacts,,2,
+34,Switches and buttons for light-current applications ,,,2,
+35,Switches and buttons for higher electrical load ,,,4,
+36,Contactors,1-pole DC contractors,,200,
+37,Contactors,2-pole DC contractors,,100,

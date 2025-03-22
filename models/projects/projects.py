@@ -53,6 +53,15 @@ class ProjectsWindow(QWidget):
             delete_button.clicked.connect(lambda _, r=row: self.confirm_delete(r))  # FIXED LAMBDA ISSUE
             self.table.setCellWidget(row, len(entry) + 1, delete_button)
 
+            # Configure headers for better appearance
+            header = self.table.horizontalHeader()
+            # header.setSectionResizeMode(0, header.ResizeToContents)
+            header.setSectionResizeMode(1, header.Stretch)  # Stretch the last column
+            header.setSectionResizeMode(2, header.Stretch)  # Stretch the last column
+            header.setSectionResizeMode(3, header.Stretch)  # Stretch the last column
+            header.setSectionResizeMode(4, header.Stretch)  # Stretch the last column
+            header.setSectionResizeMode(6, header.Stretch)  # Stretch the last column
+
     def handle_create(self):
         self.second_window = ProjectCreateWindow(self)
         self.second_window.show()

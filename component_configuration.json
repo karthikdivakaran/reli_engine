@@ -1,0 +1,152 @@
+{
+  "components": {
+    "resistors": {
+      "name": "",
+      "formula": "λref * Pi_T",
+      "additional_data": [],
+      "values": {
+        "λref": {
+          "value": "",
+          "deps": {
+            "theetta1": ""
+          }
+        },
+        "Pi_T": {
+          "value": "",
+          "deps": {
+            "theetta1": "",
+            "theetta2": ""
+          }
+        }
+      }
+    },
+    "transistors": {
+      "name": "",
+      "formula": "λref * Pi_U  * Pi_T * Pi_D",
+      "additional_data": [],
+      "values": {
+        "λref": {
+          "value": "",
+          "deps": {
+            "theetta1": ""
+          }
+        },
+        "Pi_U": {
+          "value": "",
+          "deps": {
+            "Voltage ratio U/Umax": ""
+          }
+        },
+        "Pi_T": {
+          "value": "",
+          "deps": {
+            "theetta1": "",
+            "theetta2": ""
+          }
+        },
+        "Pi_D": {
+          "value": 1,
+          "constant": true
+        }
+      }
+    },
+    "plug-in contacts that must be inserted without electrical load": {
+      "name": "",
+      "formula": "λref",
+      "additional_data": [],
+      "values": {
+        "λref": {
+          "constant": true,
+          "value": 3
+        }
+      }
+    },
+    "contactors": {
+      "name": "",
+      "formula": "λref * Pi_S * Pi_U * Pi_I * Pi_T * Pi_E",
+      "additional_data": [],
+      "values": {
+        "λref": {
+          "value": "",
+          "deps": {
+            "type": ""
+          }
+        },
+        "Pi_S": {
+          "constant": true,
+          "value": 1
+        },
+        "Pi_U": {
+          "value": "",
+          "deps": {
+            "Operating voltage U in V": ""
+          }
+        },
+        "Pi_I": {
+          "value": "",
+          "deps": {
+            "Current ratio (I/Ie)": ""
+          }
+        },
+        "Pi_T": {
+          "constant": true,
+          "value": 1
+        },
+        "Pi_E": {
+          "constant": true,
+          "value": 1
+        }
+      }
+    },
+    "memories": {
+      "name": "",
+      "formula": "λref * Pi_T",
+      "additional_data": [],
+      "values": {
+        "λref": {
+          "value": "",
+          "deps": {
+            "type": ""
+          }
+        },
+        "Pi_T": {
+          "value": "",
+          "deps": {
+            "theetta1": "",
+            "theetta2": ""
+          }
+        }
+      }
+    },
+    "analog integrated circuit": {
+      "name": "",
+      "formula": "λref * Pi_U  * Pi_T * Pi_D",
+      "additional_data": [],
+      "values": {
+        "λref": {
+          "value": "",
+          "deps": {
+            "type": ""
+          }
+        },
+        "Pi_T": {
+          "value": "",
+          "deps": {
+            "theetta1": "",
+            "theetta2": ""
+          }
+        },
+        "Pi_U": {
+          "value": "",
+          "deps": {
+            "Voltage ratio U/Umax": ""
+          }
+        },
+        "Pi_D": {
+          "constant": true,
+          "value": 1
+        }
+      }
+    }
+  }
+}
