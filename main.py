@@ -22,19 +22,23 @@ class LoginWindow(QtWidgets.QMainWindow):
         password = self.passwordInput.text()
 
         # Validate the inputs
-        if not username or not password:
-            QtWidgets.QMessageBox.warning(self, "Login Failed", "Username and password cannot be empty.")
-            return
+        # if not username or not password:
+        #     QtWidgets.QMessageBox.warning(self, "Login Failed", "Username and password cannot be empty.")
+        #     return
+
+        self.home_window = MainWindow(self)
+        self.home_window.show()
+        self.close()  # Close the login window
 
         # Check the database for user credentials
-        if self.validate_user(username, password):
-            # Login successful - Open home window
-            self.home_window = MainWindow(self)
-            self.home_window.show()
-            self.close()  # Close the login window
-        else:
-            # Login failed - Show error message
-            QtWidgets.QMessageBox.warning(self, "Login Failed", "Invalid username or password.")
+        # if self.validate_user(username, password):
+        #     # Login successful - Open home window
+        #     self.home_window = MainWindow(self)
+        #     self.home_window.show()
+        #     self.close()  # Close the login window
+        # else:
+        #     # Login failed - Show error message
+        #     QtWidgets.QMessageBox.warning(self, "Login Failed", "Invalid username or password.")
 
     @staticmethod
     def validate_user(username, password):
