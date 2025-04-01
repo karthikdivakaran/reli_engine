@@ -157,11 +157,17 @@ id,component,theetta1,theetta2,Pi_T,Pi_U,Pi_D,Pi_Q,Pi_L,Pi_K,Pi_E,Pi_S,Pi_I,env_
 156,Low-duty relays,,,1,,,,1,1,,1,,Mean Actual Ambient Temperature ᶿu,≤ 40
 157,Low-duty relays,,,1.8,,,,1,1,,1,,Mean Actual Ambient Temperature ᶿu,41 - 70
 158,Low-duty relays,,,4,,,,1,1,,1,,Mean Actual Ambient Temperature ᶿu,101 - 125
-159,Switches and buttons for light-current applications ,,,,,,,1,,1,,,,
-160,Switches and buttons for higher electrical load ,,,,,,,10,,1,,,,
+159,Switches and buttons for light-current applications,,,,,,,1,,1,,,type,nil
+160,Switches and buttons for higher electrical load,,,,,,,10,,1,,,type,nil
 161,Contactors,,,,1,,,,,,,,Operating voltage U in V,≤ 200
 162,Contactors,,,,1.2,,,,,,,,Operating voltage U in V,440
 163,Contactors,,,,1.4,,,,,,,,Operating voltage U in V,600
 164,Contactors,,,1,,,,,,1,1,0.15,Current ratio (I/Ie),0.33
 165,Contactors,,,1,,,,,,1,1,1,Current ratio (I/Ie),1
 166,Contactors,,,1,,,,,,1,1,15,Current ratio (I/Ie),4
+167,Z-Diodes,55,≤ 25,0.24,,,,,,,,,,
+168,Z-Diodes,55,60,1.2,,,,,,,,,,
+169,Z-Diodes,55,200,77,,,,,,,,,,
+170,Z-Diodes,40,≤ 25,0.47,,,,,,,,,,
+171,Z-Diodes,40,60,2.4,,,,,,,,,,
+172,Z-Diodes,40,200,151,,,,,,,,,,

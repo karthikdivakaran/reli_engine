@@ -20,6 +20,90 @@
         }
       }
     },
+    "inductors": {
+      "name": "",
+      "formula": "λref * Pi_T",
+      "additional_data": [],
+      "values": {
+        "λref": {
+          "value": "",
+          "deps": {
+            "theetta1": ""
+          }
+        },
+        "Pi_T": {
+          "value": "",
+          "deps": {
+            "theetta1": "",
+            "theetta2": ""
+          }
+        }
+      }
+    },
+    "diodes": {
+      "name": "",
+      "formula": "λref * Pi_T * Pi_D",
+      "additional_data": [],
+      "values": {
+        "λref": {
+          "value": "",
+          "deps": {
+            "theetta1": ""
+          }
+        },
+        "Pi_T": {
+          "value": "",
+          "deps": {
+            "theetta1": "",
+            "theetta2": ""
+          }
+        },
+        "Pi_D": {
+          "constant": true,
+          "value": 1
+        }
+      }
+    },
+    "z-diodes": {
+      "name": "",
+      "formula": "λref * Pi_T",
+      "additional_data": [],
+      "values": {
+        "λref": {
+          "value": "",
+          "deps": {
+            "theetta1": ""
+          }
+        },
+        "Pi_T": {
+          "value": "",
+          "deps": {
+            "theetta1": "",
+            "theetta2": ""
+          }
+        }
+      }
+    },
+    "power semiconductor": {
+      "name": "",
+      "formula": "λref * Pi_T",
+      "additional_data": [],
+      "values": {
+        "λref": {
+          "value": "",
+          "deps": {
+            "theetta1": ""
+          }
+        },
+        "Pi_T": {
+          "value": "",
+          "deps": {
+            "theetta1": "",
+            "theetta2": ""
+          }
+        }
+      }
+    },
     "transistors": {
       "name": "",
       "formula": "λref * Pi_U  * Pi_T * Pi_D",
@@ -143,6 +227,181 @@
           }
         },
         "Pi_D": {
+          "constant": true,
+          "value": 1
+        }
+      }
+    },
+    "digital logic families and bus interfaces,busdriver and receiver circuit": {
+      "name": "",
+      "formula": "λref * Pi_U * Pi_T",
+      "additional_data": [],
+      "values": {
+        "λref": {
+          "value": "",
+          "deps": {
+            "theetta1": ""
+          }
+        },
+        "Pi_T": {
+          "value": "",
+          "deps": {
+            "theetta1": "",
+            "theetta2": ""
+          }
+        },
+        "Pi_U": {
+          "value": "",
+          "deps": {
+            "Operating voltage U in V": ""
+          }
+        }
+      }
+    },
+    "switches and buttons for light-current applications": {
+      "name": "",
+      "formula": "λref * Pi_L * Pi_E ",
+      "additional_data": [],
+      "values": {
+        "λref": {
+          "value": "",
+          "deps": {
+            "type": ""
+          }
+        },
+        "Pi_E": {
+          "constant": true,
+          "value": 1
+        },
+        "Pi_L": {
+          "value": "",
+          "deps": {
+            "type": ""
+          }
+        }
+      }
+    },
+    "switches and buttons for higher electrical load": {
+      "name": "",
+      "formula": "λref * Pi_L * Pi_E ",
+      "additional_data": [],
+      "values": {
+        "λref": {
+          "value": "",
+          "deps": {
+            "type": ""
+          }
+        },
+        "Pi_E": {
+          "constant": true,
+          "value": 1
+        },
+        "Pi_L": {
+          "value": "",
+          "deps": {
+            "type": ""
+          }
+        }
+      }
+    },
+    "automotive relays": {
+      "name": "",
+      "formula": "λref * Pi_L * Pi_T * Pi_E * Pi_K",
+      "additional_data": [],
+      "values": {
+        "λref": {
+          "value": "",
+          "deps": {
+            "reference": ""
+          }
+        },
+        "Pi_T": {
+          "value": "",
+          "deps": {
+            "Mean Actual Ambient Temperature ᶿu": ""
+          }
+        },
+        "Pi_E": {
+          "constant": true,
+          "value": 1
+        },
+        "Pi_L": {
+          "constant": true,
+          "value": 1
+        },
+        "Pi_K": {
+          "constant": true,
+          "value": 1
+        }
+      }
+    },
+    "low-duty relays": {
+      "name": "",
+      "formula": "λref * Pi_L * Pi_T * Pi_E * Pi_K",
+      "additional_data": [],
+      "values": {
+        "λref": {
+          "value": "",
+          "deps": {
+            "reference": ""
+          }
+        },
+        "Pi_T": {
+          "value": "",
+          "deps": {
+            "Mean Actual Ambient Temperature ᶿu": ""
+          }
+        },
+        "Pi_E": {
+          "constant": true,
+          "value": 1
+        },
+        "Pi_L": {
+          "constant": true,
+          "value": 1
+        },
+        "Pi_K": {
+          "constant": true,
+          "value": 1
+        }
+      }
+    },
+    "solder": {
+      "name": "",
+      "formula": "λref",
+      "additional_data": [],
+      "values": {
+        "λref": {
+          "constant": true,
+          "value": 0.03
+        }
+      }
+    },
+    "capacitor": {
+      "name": "",
+      "formula": "λref * Pi_U * Pi_T * Pi_Q",
+      "additional_data": [],
+      "values": {
+        "λref": {
+          "value": "",
+          "deps": {
+            "theetta1": ""
+          }
+        },
+        "Pi_T": {
+          "value": "",
+          "deps": {
+            "theetta1": "",
+            "theetta2": ""
+          }
+        },
+        "Pi_U": {
+          "value": "",
+          "deps": {
+            "type": ""
+          }
+        },
+        "Pi_Q": {
           "constant": true,
           "value": 1
         }

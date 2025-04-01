@@ -9,12 +9,13 @@ CREATE TABLE FailureRate (
     );
 DROP TABLE IF EXISTS "Project";
 CREATE TABLE Project (
-        ProjectID INTEGER PRIMARY KEY,
+        ProjectID INTEGER PRIMARY KEY AUTOINCREMENT,
         ProjectName TEXT,
         Description TEXT,
         CreatedDate DATETIME,
         LastModified  DATETIME,
         UserID INTEGER,
+        Results TEXT,
         FOREIGN KEY(UserID) REFERENCES User(UserID)
     );
 DROP TABLE IF EXISTS "ReliabilityCalculation";

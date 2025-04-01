@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QMessageBox
 
 
 def get_comp_config():
-    with open("component_configuration.json", "r") as file:
+    with open("component_configuration.json", "r", encoding="utf-8") as file:
         data = json.load(file)
     return data["components"]
 

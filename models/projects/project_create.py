@@ -25,7 +25,7 @@ class ProjectCreateWindow(QWidget):
 
     def handle_submit(self):
         project_name = self.projectName.text()
-        description = self.description.text()
+        description = self.description.toPlainText()
         user_id = 1  # Example ID, replace with actual logic
 
         # Insert the project into the database

@@ -19,7 +19,7 @@ componentid,name,type,reference,λref,theetta1
 18,"Digital logic families and bus interfaces,busdriver and receiver circuit",CMOS B,"Degree of Integration LSI > 100, > 500",5,45
 19,Diodes,Universal diode,nil,1,55
 20,Diodes,Schottky diode,nil,1,55
-21,Diodes,Z - diode,nil,1,40
+21,Z-Diodes,Z - diode,nil,1,40
 22,power semiconductor,"Triac's,Diac's",nil,75,85
 23,power semiconductor,Thyristors,nil,50,85
 24,Capacitor,Metalized film,"U/Umax ≤ 0.1, Uref/Umax 0.5",0.7,40
@@ -32,7 +32,7 @@ componentid,name,type,reference,λref,theetta1
 31,automotive relays,Plastic-sealed relays,F > 20  Cn ,0.5,
 32,automotive relays,Plastic-sealed relays,50 Cn <F < 100cN,1,
 33,Low-duty relays,Plastic-sealed relays with twin contacts,,2,
-34,Switches and buttons for light-current applications ,,,2,
-35,Switches and buttons for higher electrical load ,,,4,
+34,Switches and buttons for light-current applications,nil,,2,
+35,Switches and buttons for higher electrical load,nil,,4,
 36,Contactors,1-pole DC contractors,,200,
 37,Contactors,2-pole DC contractors,,100,
