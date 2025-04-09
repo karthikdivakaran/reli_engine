@@ -258,30 +258,7 @@
         }
       }
     },
-    "switches and buttons for light-current applications": {
-      "name": "",
-      "formula": "λref * Pi_L * Pi_E ",
-      "additional_data": [],
-      "values": {
-        "λref": {
-          "value": "",
-          "deps": {
-            "type": ""
-          }
-        },
-        "Pi_E": {
-          "constant": true,
-          "value": 1
-        },
-        "Pi_L": {
-          "value": "",
-          "deps": {
-            "type": ""
-          }
-        }
-      }
-    },
-    "switches and buttons for higher electrical load": {
+    "switches and buttons": {
       "name": "",
       "formula": "λref * Pi_L * Pi_E ",
       "additional_data": [],
@@ -398,7 +375,8 @@
         "Pi_U": {
           "value": "",
           "deps": {
-            "type": ""
+            "type": "",
+            "U/Umax": ""
           }
         },
         "Pi_Q": {

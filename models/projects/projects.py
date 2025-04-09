@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QWidget, QPushButton, QTableWidget, QTableWidgetItem
 from PyQt5.QtGui import QIcon
 from database.db_connection import get_connection
 from models.projects.project_create import ProjectCreateWindow
+from session import Session
 
 
 class ProjectsWindow(QWidget):
@@ -11,6 +12,7 @@ class ProjectsWindow(QWidget):
         uic.loadUi("gui/project/projects.ui", self)  # Load the .ui file for the GUI
         self.main_window = main_window
         self.data = []
+        self.user = Session().get_user()
 
         # Ensure table is a QTableWidget, not QTableView
         self.table = self.findChild(QTableWidget, "tableView")
@@ -44,12 +46,14 @@ class ProjectsWindow(QWidget):
             # Edit button (✏️)
             edit_button = QPushButton()
             edit_button.setIcon(QIcon("static/icons/icons-edit.png"))
+            edit_button.setStyleSheet("border: none; padding: 0px; background-color: #fff;")
             edit_button.clicked.connect(lambda _, r=row: self.on_edit_click(r))
             self.table.setCellWidget(row, len(entry), edit_button)
 
             # Delete button (🗑️)
             delete_button = QPushButton()
             delete_button.setIcon(QIcon("static/icons/icons-delete.png"))
+            delete_button.setStyleSheet("border: none; padding: 0px; background-color: #fff;")
             delete_button.clicked.connect(lambda _, r=row: self.confirm_delete(r))  # FIXED LAMBDA ISSUE
             self.table.setCellWidget(row, len(entry) + 1, delete_button)
 
@@ -71,11 +75,14 @@ class ProjectsWindow(QWidget):
         self.close()
         self.main_window.show()
 
-    @staticmethod
-    def get_all_projects():
+    def get_all_projects(self):
         conn = get_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM Project")
+        if self.user["Role"] in ["Admin"]:
+            cursor.execute("SELECT ProjectID, ProjectName, Description, CreatedDate, LastModified, UserID FROM Project")
+        else:
+            cursor.execute("SELECT ProjectID, ProjectName, Description, CreatedDate, LastModified, Results FROM "
+                           "Project WHERE UserID = ?", (self.user["UserID"],))
         columns = [desc[0] for desc in cursor.description]
         projects = [dict(zip(columns, row)) for row in cursor.fetchall()]
         conn.close()

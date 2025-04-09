@@ -22,49 +22,62 @@
   <property name="inputMethodHints">
    <set>Qt::ImhNone</set>
   </property>
+  <widget class="QTableWidget" name="tableWidget">
+   <property name="geometry">
+    <rect>
+     <x>-460</x>
+     <y>60</y>
+     <width>1721</width>
+     <height>791</height>
+    </rect>
+   </property>
+  </widget>
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>300</y>
-     <width>47</width>
-     <height>13</height>
+     <x>80</x>
+     <y>301</y>
+     <width>71</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="text">
     <string>Role</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="userName">
+  <widget class="QLineEdit" name="firstName">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>180</y>
-     <width>113</width>
-     <height>20</height>
+     <x>160</x>
+     <y>100</y>
+     <width>181</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="placeholderText">
+    <string>Enter First Name</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>180</y>
-     <width>71</width>
-     <height>16</height>
+     <x>80</x>
+     <y>101</y>
+     <width>81</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>User Name</string>
+    <string>First Name</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>220</y>
-     <width>61</width>
-     <height>16</height>
+     <x>80</x>
+     <y>201</y>
+     <width>81</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -74,20 +87,23 @@
   <widget class="QLineEdit" name="emailID">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>260</y>
-     <width>113</width>
-     <height>20</height>
+     <x>160</x>
+     <y>251</y>
+     <width>181</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="placeholderText">
+    <string>Enter Email Address</string>
    </property>
   </widget>
   <widget class="QPushButton" name="addUserButton">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>350</y>
-     <width>75</width>
-     <height>23</height>
+     <x>160</x>
+     <y>351</y>
+     <width>121</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
@@ -97,10 +113,10 @@
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>260</y>
-     <width>47</width>
-     <height>13</height>
+     <x>80</x>
+     <y>251</y>
+     <width>71</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="text">
@@ -110,10 +126,10 @@
   <widget class="QPushButton" name="backBtn">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>20</y>
+     <x>0</x>
+     <y>10</y>
      <width>113</width>
-     <height>32</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
@@ -123,10 +139,10 @@
   <widget class="QLineEdit" name="userPwd">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>220</y>
-     <width>113</width>
-     <height>20</height>
+     <x>160</x>
+     <y>201</y>
+     <width>181</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -138,14 +154,17 @@
    <property name="echoMode">
     <enum>QLineEdit::Password</enum>
    </property>
+   <property name="placeholderText">
+    <string>Password</string>
+   </property>
   </widget>
   <widget class="QComboBox" name="userRolecombo">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>300</y>
-     <width>111</width>
-     <height>22</height>
+     <x>160</x>
+     <y>281</y>
+     <width>181</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="toolTip">
@@ -170,9 +189,35 @@
     <string/>
    </property>
   </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>151</y>
+     <width>81</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Last Name</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lastName">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>150</y>
+     <width>181</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>Enter Last Name</string>
+   </property>
+  </widget>
  </widget>
  <tabstops>
-  <tabstop>userName</tabstop>
+  <tabstop>firstName</tabstop>
   <tabstop>userPwd</tabstop>
   <tabstop>emailID</tabstop>
   <tabstop>userRolecombo</tabstop>

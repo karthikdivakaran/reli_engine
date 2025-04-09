@@ -22,9 +22,9 @@ componentid,name,type,reference,λref,theetta1
 21,Z-Diodes,Z - diode,nil,1,40
 22,power semiconductor,"Triac's,Diac's",nil,75,85
 23,power semiconductor,Thyristors,nil,50,85
-24,Capacitor,Metalized film,"U/Umax ≤ 0.1, Uref/Umax 0.5",0.7,40
-25,Capacitor,Ceramic,"U/Umax 0.7, Uref/Umax 0.5",1,40
-26,Capacitor,Metalized paper,"U/Umax 1, Uref/Umax 0.5",2,40
+24,Capacitor,Metalized film,Uref/Umax 0.5,0.7,40
+25,Capacitor,Ceramic,Uref/Umax 0.5,1,40
+26,Capacitor,Metalized paper,Uref/Umax 0.5,2,40
 27,Inductors,Inductors for EMC applications ≤ 3A,nil,1.5,60
 28,Inductors,Inductors for EMC applications >3A,nil,3,85
 29,Inductors,High frequency inductors and transforms,nil,5,55
@@ -32,7 +32,7 @@ componentid,name,type,reference,λref,theetta1
 31,automotive relays,Plastic-sealed relays,F > 20  Cn ,0.5,
 32,automotive relays,Plastic-sealed relays,50 Cn <F < 100cN,1,
 33,Low-duty relays,Plastic-sealed relays with twin contacts,,2,
-34,Switches and buttons for light-current applications,nil,,2,
-35,Switches and buttons for higher electrical load,nil,,4,
+34,Switches and buttons,light-current applications,,2,
+35,Switches and buttons,higher electrical load,,4,
 36,Contactors,1-pole DC contractors,,200,
 37,Contactors,2-pole DC contractors,,100,

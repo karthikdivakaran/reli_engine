@@ -249,12 +249,19 @@ class CalculationsWindow(QWidget):
                 return None
         return None
 
-    def get_extra_values(self, key, value, item_key):
+    def get_extra_values(self, key, value, item_key, com_type=None):
         compn = self.comp_comboBox.currentText()
         conn = get_connection()
         cursor = conn.cursor()
-        query = f"SELECT * FROM env_factors WHERE component = ? AND env_varibale = ? AND env_value = ?"
-        cursor.execute(query, (compn, key, value))
+        if key== "type":
+            query = "SELECT * FROM env_factors WHERE component = ? AND type = ?"
+            cursor.execute(query, (compn, value))
+        elif com_type:
+            query = f"SELECT * FROM env_factors WHERE component = ? AND env_varibale = ? AND env_value = ? AND type = ?"
+            cursor.execute(query, (compn, key, value, com_type))
+        else:
+            query = f"SELECT * FROM env_factors WHERE component = ? AND env_varibale = ? AND env_value = ?"
+            cursor.execute(query, (compn, key, value))
         results = cursor.fetchall()
         column_names = [desc[0] for desc in cursor.description]
 
@@ -267,7 +274,7 @@ class CalculationsWindow(QWidget):
                 return item[item_key]
         return None
 
-    def get_value(self, deps={}, key=""):
+    def get_value(self, deps={}, key="", comp_type=""):
         if deps:
             if "theetta1" in key and  "theetta2" in key:
                 return self.get_pi_value()
@@ -275,8 +282,12 @@ class CalculationsWindow(QWidget):
             compn = self.comp_comboBox.currentText()
             conn = get_connection()
             cursor = conn.cursor()
-            query = "SELECT * FROM env_factors WHERE component = ? AND env_varibale = ?"
-            cursor.execute(query, (compn,key))
+            if comp_type:
+                query = "SELECT * FROM env_factors WHERE component = ? AND env_varibale = ? AND type = ?"
+                cursor.execute(query, (compn, key, comp_type))
+            else:
+                query = "SELECT * FROM env_factors WHERE component = ? AND env_varibale = ?"
+                cursor.execute(query, (compn, key))
             results = cursor.fetchall()
             column_names = [desc[0] for desc in cursor.description]
 
@@ -369,11 +380,36 @@ class CalculationsWindow(QWidget):
                     label = self.findChild(QLabel, f"val_label{index}")
                     label.setText(f"{key} : {item["value"]}")
                 elif "type" in item["deps"]:
-                    label = self.findChild(QLabel, f"val_label{index}")
+                    dep_keys = list(item["deps"].keys())
                     type_val = self.type_comboBox.currentText().strip()
-                    value = self.get_extra_values("type", type_val, key)
-                    item["value"] = value
-                    label.setText(f"{key} : {item["value"]}")
+                    if  len(dep_keys)==1:
+                        label = self.findChild(QLabel, f"val_label{index}")
+                        if type_val and type_val not in constants.exclude_options:
+                            value = self.get_extra_values("type", type_val, key)
+                            item["value"] = value
+                            label.setText(f"{key} : {item["value"]}")
+                    else:
+                        for dep_key in dep_keys:
+                            if dep_key == "type":
+                                continue
+                            label = self.findChild(QLabel, f"val_label{index}")
+                            label.setText(f"{key}  {dep_key} :")
+
+                            comb_box = self.findChild(QComboBox, f"val_combo_{index}")
+                            comb_box.setVisible(True)
+                            comb_box.addItem("Select Option")
+                            val_items = self.get_value(key=dep_key)
+                            temp_items = []
+                            if val_items:
+                                for val_item in val_items:
+                                    comb_box.addItem(f"{val_item}")
+                                    if val_items not in temp_items:
+                                        temp_items.append(val_items)
+                                    comb_box.setProperty("id", f"{key}|||{dep_key}|||{index}")
+                                    comb_box.currentIndexChanged.connect(self.update_env_values)
+                                    if len(temp_items) == 1:
+                                        comb_box.setCurrentIndex(1)
+
                 elif "reference" in item["deps"]:
                     label = self.findChild(QLabel, f"val_label{index}")
                     ref = self.ref_comboBox.currentText().strip()
@@ -383,7 +419,7 @@ class CalculationsWindow(QWidget):
                 else:
                     for val in item["deps"]:
                         label = self.findChild(QLabel, f"val_label{index}")
-                        label.setText(f"{key}  {val} :")
+                        label.setText(f"{val} :")
 
                         comb_box = self.findChild(QComboBox, f"val_combo_{index}")
                         comb_box.setVisible(True)
@@ -417,10 +453,16 @@ class CalculationsWindow(QWidget):
             print(key, value, item_key)
             if item_key not in self.prev_key or self.prev_key[item_key] != combo_id+value:
                 self.prev_key[item_key] = combo_id+value
-                comp_value = self.get_extra_values(key, value, item_key)
+                if "type" in self.component_config["values"][item_key]["deps"] and key != "type":
+                    type_val = self.type_comboBox.currentText().strip()
+                    comp_value = self.get_extra_values(key, value, item_key, type_val)
+                    self.component_config["values"][item_key]["deps"]["type"] = type_val
+                else:
+                    comp_value = self.get_extra_values(key, value, item_key)
                 if comp_value:
                     self.component_config["values"][item_key]["value"] = comp_value
                     self.component_config["values"][item_key]["deps"][key] = value
+
                     # text = self.findChild(QLabel, f"val_label{index}").text()
                     # self.findChild(QLabel, f"val_label{index}").setText(text+" "+comp_value)
                     for inx in range(1,5):

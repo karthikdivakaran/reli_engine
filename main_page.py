@@ -2,6 +2,7 @@ import sys
 from PyQt5 import QtWidgets, uic
 from controllers import home_controller
 # from main import LoginWindow
+from session import Session
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -12,11 +13,14 @@ class MainWindow(QtWidgets.QMainWindow):
         uic.loadUi("gui/home.ui", self)
         self.main_window = main_window
         # Example: Connect a button clicked signal
+        user = Session().get_user()
         self.projectsBtn.clicked.connect(self.handle_project_click)
         self.componentBtn.clicked.connect(self.handle_component_click)
         self.calculationBtn.clicked.connect(self.handle_calculation_eng)
         self.userManagementBtn.clicked.connect(self.handle_users)
 
+        if user["Role"] not in ["Admin"]:
+            self.userManagementBtn.setVisible(False)
     def handle_project_click(self):
         home_controller.handle_project_btn(self)
 

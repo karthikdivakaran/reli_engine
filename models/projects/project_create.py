@@ -1,12 +1,14 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget, QStyledItemDelegate, QPushButton, QMainWindow, QStyleOptionButton, QStyle
 from database.db_connection import get_connection
+from session import Session
 
 class ProjectCreateWindow(QWidget):
     def __init__(self, prev_window):
         super().__init__()
         uic.loadUi("gui/project/create_project.ui", self)  # Load the .ui file for the GUI
         self.prev_window = prev_window
+        self.user = Session().get_user()
 
         # Find GUI elements defined in the .ui file
         self.goBackButton = self.findChild(QPushButton, "backBtn")  # "Back" button
@@ -34,12 +36,11 @@ class ProjectCreateWindow(QWidget):
         # Refresh ProjectsWindow and go back
         self.goBack()
 
-    @staticmethod
-    def create_project(project_name, description, user_id):
+    def create_project(self, project_name, description, user_id):
         conn = get_connection()
         cursor = conn.cursor()
         cursor.execute(
             "INSERT INTO Project (ProjectName, Description, CreatedDate, LastModified , UserID) VALUES (?, ?, datetime('now'), datetime('now'), ?)",
-            (project_name, description, user_id))
+            (project_name, description, self.user["UserID"]))
         conn.commit()
         conn.close()

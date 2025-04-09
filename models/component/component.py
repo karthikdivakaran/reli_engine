@@ -48,8 +48,9 @@ class ComponentsWindow(QWidget):
             # Edit button (✏️)
             edit_button = QPushButton()
             edit_button.setIcon(QIcon("static/icons/icons-edit.png"))
+            # edit_button.setObjectName("editBtn")
             edit_button.setFixedSize(24, 24)
-            edit_button.setStyleSheet("border: none; padding: 0px;")
+            edit_button.setStyleSheet("border: none; padding: 0px; background-color: #fff;")
             edit_button.clicked.connect(lambda _, r=row: self.on_edit_click(r))
             self.table.setCellWidget(row, len(entry), edit_button)
 
@@ -57,7 +58,8 @@ class ComponentsWindow(QWidget):
             delete_button = QPushButton()
             delete_button.setIcon(QIcon("static/icons/icons-delete.png"))
             delete_button.setFixedSize(24, 24)
-            delete_button.setStyleSheet("border: none; padding: 0px;")
+            delete_button.setObjectName("editBtn")
+            delete_button.setStyleSheet("border: none; padding: 0px; background-color: #fff;")
             delete_button.clicked.connect(lambda _, r=row: self.confirm_delete(r))  # FIXED LAMBDA ISSUE
             self.table.setCellWidget(row, len(entry) + 1, delete_button)
 
