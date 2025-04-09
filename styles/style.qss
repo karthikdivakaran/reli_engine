@@ -1,0 +1,41 @@
+QLineEdit {
+    padding: 8px;
+    border: 1px solid #888;
+    border-radius: 4px;
+}
+
+QPushButton {
+    background-color: #24A0ED;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    margin: 3px;
+}
+QPushButton#edit_button {
+/*    background-color: #24A0ED;*/
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    margin: 3px;
+}
+QPushButton#addUserBtn {
+    background-color: #1b6e0e;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    margin: 3px;
+}
+QPushButton#createComp {
+    background-color: #1b6e0e;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    margin: 3px;
+}
+QPushButton#createProject{
+    background-color: #1b6e0e;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    margin: 3px;
+}

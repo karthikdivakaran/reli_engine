@@ -113,20 +113,20 @@
     <rect>
      <x>10</x>
      <y>110</y>
-     <width>111</width>
+     <width>191</width>
      <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>Temperature °C</string>
+    <string>Operational Temperature °C</string>
    </property>
   </widget>
   <widget class="QComboBox" name="tempComboBox">
    <property name="geometry">
     <rect>
-     <x>120</x>
+     <x>200</x>
      <y>110</y>
-     <width>151</width>
+     <width>121</width>
      <height>31</height>
     </rect>
    </property>

@@ -7,10 +7,10 @@ from PyQt5.QtWidgets import QApplication, QWidget, QStyledItemDelegate, QPushBut
 from database.db_connection import get_connection
 
 
-class addUserWindow(QWidget):
+class RegisterUserWindow(QMainWindow):
     def __init__(self, prev_window):
         super().__init__()
-        uic.loadUi("gui/user_management/addUser.ui", self)  # Load the .ui file for the GUI
+        uic.loadUi("gui/user_management/register_user.ui", self)  # Load the .ui file for the GUI
         self.prev_window = prev_window
 
         # Find GUI elements defined in the .ui file
@@ -23,7 +23,6 @@ class addUserWindow(QWidget):
         self.goBackButton = self.findChild(QPushButton, "backBtn")  # "Back" button
 
 
-        self.userRolecombo.addItem("Select a role")
         self.userRolecombo.setItemText(0, "Select a role")
         # self.userRolecombo.setItemData(0, 0)  # if True
         # self.userRolecombo.setItemData(0, 0, Qt.ItemIsSelectable | Qt.ItemIsEnabled)
@@ -45,7 +44,6 @@ class addUserWindow(QWidget):
     def goBack(self):
         # self.prev_window.refresh_projects()  # Refresh the ProjectsWindow data
         self.close()  # Close the Create Project window
-        self.prev_window.refresh_users()
         self.prev_window.show()  # Show the ProjectsWindow
 
 
@@ -56,7 +54,7 @@ class addUserWindow(QWidget):
             return re.match(email_regex, email)
         f_name = self.firstName.text()
         l_name = self.lastName.text()
-        u_pwd = self.userPwd.text()
+        u_pwd = self.password.text()
         u_emailid = self.emailID.text()
         index = self.userRolecombo.currentIndex()
         if not f_name or not l_name or not u_pwd or not u_emailid:
