@@ -1,11 +1,14 @@
 
 import json
+import shutil
+
 import pandas as pd
 from weasyprint import HTML
 from jinja2 import Environment, FileSystemLoader
 from PyQt5.QtWidgets import QMessageBox
 from docx import Document
 from bs4 import BeautifulSoup
+from PyQt5.QtWidgets import QFileDialog
 
 
 def get_comp_config():
@@ -25,6 +28,18 @@ def get_details_values(details):
         result = ""
     return result, equation_values
 
+def export_pdf(details):
+    env = Environment(loader=FileSystemLoader('.'))
+    template = env.get_template('template/pdf_export.html')
+    result, equation_val = get_details_values(details)
+    html_content = template.render(details=details, result=result, equation=equation_val)
+
+    # Save HTML file (optional)
+    with open("output.html", "w") as f:
+        f.write(html_content)
+    # Convert HTML to PDF
+    HTML(string=html_content).write_pdf("output.pdf")
+
 
 def export_html(details):
     env = Environment(loader=FileSystemLoader('.'))
@@ -37,11 +52,18 @@ def export_html(details):
         f.write(html_content)
     # Convert HTML to PDF
     HTML(string=html_content).write_pdf("output.pdf")
-    export_to_word(html_content)
+    export_to_word(details)
     export_excel(details)
 
+def export_to_word(details):
+    env = Environment(loader=FileSystemLoader('.'))
+    template = env.get_template('template/pdf_export.html')
+    result, equation_val = get_details_values(details)
+    html_content = template.render(details=details, result=result, equation=equation_val)
 
-def export_to_word(html_content):
+    # Save HTML file (optional)
+    with open("output.html", "w") as f:
+        f.write(html_content)
     # Create a new Word Document
     document = Document()
 
@@ -95,3 +117,46 @@ def load_stylesheet(path):
 #     main_window.home_window = MainWindow(main_window)
 #     main_window.home_window.show()
 #     main_window.close()  # Close the login window
+
+def download_pdf(window):
+    # Source file to be "downloaded"
+    source_path = "output.pdf"
+
+    # Ask user where to save it
+    save_path, _ = QFileDialog.getSaveFileName(window, "Save File", "pdf_report.pdf", "PDF Files (*.pdf);;All Files (*)")
+
+    if save_path:
+        try:
+            shutil.copy(source_path, save_path)
+            print(f"File saved to: {save_path}")
+        except Exception as e:
+            print(f"Error saving file: {e}")
+
+def download_excel(window):
+    # Sample data (replace with your actual data)
+    source_path = "output.xlsx"
+
+    # Ask user where to save it
+    save_path, _ = QFileDialog.getSaveFileName(window, "Save Excel File", "excel_report.xlsx", "Excel Files (*.xlsx);;All Files (*)")
+
+    if save_path:
+        try:
+            shutil.copy(source_path, save_path)
+            print(f"File saved to: {save_path}")
+        except Exception as e:
+            print(f"Error saving file: {e}")
+
+
+def download_word(window):
+    # Sample data (replace with your actual data)
+    source_path = "output.docx"
+
+    # Ask user where to save it
+    save_path, _ = QFileDialog.getSaveFileName(window, "Save Excel File", "excel_report.docx", "Word Files (*.docx);;All Files (*)")
+
+    if save_path:
+        try:
+            shutil.copy(source_path, save_path)
+            print(f"File saved to: {save_path}")
+        except Exception as e:
+            print(f"Error saving file: {e}")
