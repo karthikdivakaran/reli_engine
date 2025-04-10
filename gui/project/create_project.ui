@@ -19,7 +19,7 @@
   <widget class="QPushButton" name="backBtn">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>90</x>
      <y>0</y>
      <width>113</width>
      <height>32</height>
@@ -68,9 +68,9 @@
   <widget class="QPushButton" name="submitBtn">
    <property name="geometry">
     <rect>
-     <x>190</x>
+     <x>152</x>
      <y>220</y>
-     <width>113</width>
+     <width>151</width>
      <height>41</height>
     </rect>
    </property>
@@ -88,7 +88,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="submitBtn_2">
+  <widget class="QPushButton" name="calculateFailure">
    <property name="geometry">
     <rect>
      <x>360</x>
@@ -99,6 +99,29 @@
    </property>
    <property name="text">
     <string>Calculate Failure Rate</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="homeBtn">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>0</y>
+     <width>81</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Home</string>
+   </property>
+   <property name="icon">
+    <iconset theme="../../static/icons/home.png">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>18</width>
+     <height>18</height>
+    </size>
    </property>
   </widget>
  </widget>

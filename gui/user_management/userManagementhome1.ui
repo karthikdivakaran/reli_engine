@@ -17,10 +17,10 @@
    <widget class="QPushButton" name="showUsersBtn">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>100</y>
-      <width>75</width>
-      <height>23</height>
+      <x>74</x>
+      <y>82</y>
+      <width>111</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -31,9 +31,9 @@
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>100</y>
-      <width>75</width>
-      <height>23</height>
+      <y>82</y>
+      <width>131</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -43,10 +43,10 @@
    <widget class="QPushButton" name="updateUserBtn">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>160</y>
-      <width>75</width>
-      <height>23</height>
+      <x>74</x>
+      <y>142</y>
+      <width>111</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -57,9 +57,9 @@
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>160</y>
-      <width>75</width>
-      <height>23</height>
+      <y>142</y>
+      <width>131</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -73,7 +73,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>37</height>
     </rect>
    </property>
   </widget>

@@ -16,18 +16,18 @@ def handle_component_btn(main_window):
     main_window.hide()
 
 
-def handle_calc_btn(main_window):
-    main_window.second_window = CalculationsWindow(main_window)
+def handle_calc_btn(main_window, home_window, project_id=None):
+    main_window.second_window = CalculationsWindow(main_window, home_window, project_id)
     main_window.second_window.show()
     main_window.hide()
 
 
-def handle_users_btn(main_window):
-    main_window.second_window = UserManagementWindow(main_window)
+def handle_users_btn(main_window, home_window):
+    main_window.second_window = UserManagementWindow(main_window, home_window)
     main_window.second_window.show()
     main_window.hide()
 
-def handle_singup_btn(main_window):
+def handle_singup_btn(main_window, home_window):
     main_window.second_window = RegisterUserWindow(main_window)
     main_window.second_window.show()
     main_window.hide()

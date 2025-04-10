@@ -23,7 +23,7 @@ class LoginWindow(QtWidgets.QMainWindow):
         self.singupButton.clicked.connect(self.handle_signup)
 
     def handle_signup(self):
-        home_controller.handle_singup_btn(self)
+        home_controller.handle_singup_btn(self, self)
 
     def handle_login(self):
         username = self.usernameInput.text()

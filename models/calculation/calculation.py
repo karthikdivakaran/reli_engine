@@ -3,26 +3,32 @@ import copy
 
 from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget, QPushButton, QComboBox, QLabel, QLineEdit, QVBoxLayout
+from PyQt5.QtGui import QIcon
 
 import constants
 from models.calculation.calculate_fr import *
 from database.db_connection import get_connection
+from models.projects.project_create import ProjectCreateWindow
+from models.projects.view_project import ProjectViewWindow
 from utils import utils
-
+from session import Session
 
 
 class CalculationsWindow(QWidget):
-    def __init__(self, main_window):
+    def __init__(self, main_window, home_window, project_id=None):
         super().__init__()
         uic.loadUi("gui/calculation_engine.ui", self)  # Load the .ui file for the GUI
         self.main_window = main_window
+        self.home_window = home_window
         self.config = utils.get_comp_config()
         self.component_config = {}
         self.alert = True
         self.prev_key = {}
         self.component = None
+        self.user = Session().get_user()
 
         self.theetta_1 = None
+        self.project_id = project_id
 
         # Find GUI elements defined in the .ui file
         self.tableView = self.findChild(QWidget, "tableView")  # The QTableView
@@ -40,6 +46,10 @@ class CalculationsWindow(QWidget):
         self.ref_comboBox = self.findChild(QComboBox, "refComboBox")
         self.tmp_comboBox = self.findChild(QComboBox, "tempComboBox")
         self.ref_comboBox = self.findChild(QComboBox, "refComboBox")
+        self.homeButton = self.findChild(QPushButton, "homeBtn")
+        if self.homeButton:
+            self.homeBtn.setIcon(QIcon("static/icons/home.png"))
+            self.homeButton.clicked.connect(self.handle_home)
 
         self.comp_comboBox.clear()
         self.type_comboBox.clear()
@@ -59,14 +69,46 @@ class CalculationsWindow(QWidget):
 
 
         self.save_project.clicked.connect(self.save_project_data)
+        if project_id:
+            self.save_project.setText("Save")
 
     def goBack(self):
         self.close()  # Close the Components window
         self.main_window.show()  # Show the main window
 
+    def handle_home(self):
+        self.close()
+        self.home_window.show()
+
+    def update_project(self, result):
+        project_id = self.project_id
+        if type(project_id) == dict:
+            project_id = self.project_id['ProjectID']
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("UPDATE Project SET Results = ? WHERE UserID = ? and ProjectID = ?",
+            (json.dumps(result), self.user["UserID"], project_id))
+
+        cursor.execute("SELECT * FROM Project WHERE ProjectID = ?", (project_id,))
+
+        columns = [desc[0] for desc in cursor.description]
+        projects = [dict(zip(columns, row)) for row in cursor.fetchall()]
+        conn.commit()
+        conn.close()
+        return projects[0]
+
     def save_project_data(self):
         if self.validate_comp():
-            print("valid")
+            if self.project_id:
+                row = self.update_project(self.component_config)
+                self.second_window = ProjectViewWindow(self, self.home_window, row=row)
+                self.second_window.show()
+                self.hide()
+            else:
+                print("valid")
+                self.second_window = ProjectCreateWindow(self, self.home_window, result=self.component_config)
+                self.second_window.show()
+                self.hide()
 
     def update_values(self):
         if self.component_config:
