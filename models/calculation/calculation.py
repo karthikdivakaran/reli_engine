@@ -186,7 +186,7 @@ class CalculationsWindow(QWidget):
         self.type_comboBox.clear()
         self.type_comboBox.addItem("Select Option")
         compn = self.comp_comboBox.currentText()
-        self.equation.setText(f"λ = {self.component_config.get("formula")}")
+        self.equation.setText(f"λ = {self.component_config.get('formula')}")
         types = []
         for comp in self.components_list:
             if comp['type'] not in types and compn == comp["name"]:
@@ -417,10 +417,10 @@ class CalculationsWindow(QWidget):
                     label.setText(f"{key} : {item['value']}")
                 elif "theetta1" in item["deps"]:
                     label = self.findChild(QLabel, f"val_label{index}")
-                    label.setText(f"{key} : {item["value"]}")
+                    label.setText(f"{key} : {item['value']}")
                 elif key in ["λref"]:
                     label = self.findChild(QLabel, f"val_label{index}")
-                    label.setText(f"{key} : {item["value"]}")
+                    label.setText(f"{key} : {item['value']}")
                 elif "type" in item["deps"]:
                     dep_keys = list(item["deps"].keys())
                     type_val = self.type_comboBox.currentText().strip()
@@ -429,7 +429,7 @@ class CalculationsWindow(QWidget):
                         if type_val and type_val not in constants.exclude_options:
                             value = self.get_extra_values("type", type_val, key)
                             item["value"] = value
-                            label.setText(f"{key} : {item["value"]}")
+                            label.setText(f"{key} : {item['value']}")
                     else:
                         for dep_key in dep_keys:
                             if dep_key == "type":
@@ -457,7 +457,7 @@ class CalculationsWindow(QWidget):
                     ref = self.ref_comboBox.currentText().strip()
                     value = self.get_extra_values("reference", ref, key)
                     item["value"] = value
-                    label.setText(f"{key} : {item["value"]}")
+                    label.setText(f"{key} : {item['value']}")
                 else:
                     for val in item["deps"]:
                         label = self.findChild(QLabel, f"val_label{index}")
