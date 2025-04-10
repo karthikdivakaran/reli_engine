@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QWidget, QPushButton, QTableWidget, QTableWidgetItem
 from PyQt5.QtGui import QIcon
 from database.db_connection import get_connection
 from models.projects.project_create import ProjectCreateWindow
+from models.projects.view_project import ProjectViewWindow
 from session import Session
 
 
@@ -16,14 +17,18 @@ class ProjectsWindow(QWidget):
 
         # Ensure table is a QTableWidget, not QTableView
         self.table = self.findChild(QTableWidget, "tableView")
-        self.goBackButton = self.findChild(QPushButton, "backBtn")
+        # self.goBackButton = self.findChild(QPushButton, "backBtn")
         self.createButton = self.findChild(QPushButton, "createProject")
+        self.homeButton = self.findChild(QPushButton, "homeBtn")
 
-        if self.goBackButton:
-            self.goBackButton.clicked.connect(self.goBack)
+        # if self.goBackButton:
+        #     self.goBackButton.clicked.connect(self.goBack)
 
         if self.createButton:
             self.createButton.clicked.connect(self.handle_create)
+        if self.homeButton:
+            self.homeBtn.setIcon(QIcon("static/icons/home.png"))
+            self.homeButton.clicked.connect(self.handle_home)
 
         # Load and display initial data
         self.refresh_projects()
@@ -32,6 +37,7 @@ class ProjectsWindow(QWidget):
         self.data = self.get_all_projects()
         headers = list(self.data[0].keys()) if self.data else []
         if headers:
+            headers.append("")
             headers.append("")
             headers.append("")
         self.table.setRowCount(len(self.data))
@@ -57,6 +63,13 @@ class ProjectsWindow(QWidget):
             delete_button.clicked.connect(lambda _, r=row: self.confirm_delete(r))  # FIXED LAMBDA ISSUE
             self.table.setCellWidget(row, len(entry) + 1, delete_button)
 
+            # Edit button
+            view_button = QPushButton()
+            view_button.setIcon(QIcon("static/icons/view.png"))
+            view_button.setStyleSheet("border: none; padding: 0px; background-color: #fff;")
+            view_button.clicked.connect(lambda _, r=row: self.view_project(r))  # FIXED LAMBDA ISSUE
+            self.table.setCellWidget(row, len(entry) + 2, view_button)
+
             # Configure headers for better appearance
             header = self.table.horizontalHeader()
             # header.setSectionResizeMode(0, header.ResizeToContents)
@@ -65,13 +78,18 @@ class ProjectsWindow(QWidget):
             header.setSectionResizeMode(3, header.Stretch)  # Stretch the last column
             header.setSectionResizeMode(4, header.Stretch)  # Stretch the last column
             header.setSectionResizeMode(6, header.Stretch)  # Stretch the last column
+            header.setSectionResizeMode(7, header.Stretch)  # Stretch the last column
 
     def handle_create(self):
-        self.second_window = ProjectCreateWindow(self)
+        self.second_window = ProjectCreateWindow(self, self.main_window)
         self.second_window.show()
         self.hide()
 
-    def goBack(self):
+    # def goBack(self):
+    #     self.close()
+    #     self.main_window.show()
+
+    def handle_home(self):
         self.close()
         self.main_window.show()
 
@@ -90,6 +108,15 @@ class ProjectsWindow(QWidget):
 
     def on_edit_click(self, row):
         print(f"Edit button clicked on row {row}")
+        self.second_window = ProjectCreateWindow(self, self.main_window, row=self.data[row])
+        self.second_window.show()
+        self.hide()
+
+    def view_project(self, row):
+        print(self.data[row])
+        self.second_window = ProjectViewWindow(self, self.main_window, row=self.data[row])
+        self.second_window.show()
+        self.hide()
 
     def confirm_delete(self, row):
         """ Show confirmation dialog before deleting a row """

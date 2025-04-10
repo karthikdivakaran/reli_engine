@@ -94,6 +94,9 @@ class ComponentsWindow(QWidget):
 
     def on_edit_click(self, row):
         print(f"Edit button clicked on row {row}")
+        self.second_window = ComponentCreateWindow(self, self.data[row])  # Pass self as reference
+        self.second_window.show()
+        self.hide()
 
     def confirm_delete(self, row):
         """ Show confirmation dialog before deleting a row """
@@ -112,16 +115,16 @@ class ComponentsWindow(QWidget):
     def on_delete_click(self, row):
         """ Remove the row from the table """
         try:
-            self.delete_project(self.data[row]['id'])
-            print(f"Row {row} deleted {self.data[row]['id']}")
+            self.delete_project(self.data[row]['componentid'])
+            print(f"Row {row} deleted {self.data[row]['componentid']}")
             self.refresh_components()
         except Exception as e:
             print(f"Error deleting row {row}: {e}")
 
-    def delete_project(self, project_id):
+    def delete_project(self, comp_id):
         conn = get_connection()
         cursor = conn.cursor()
-        cursor.execute("DELETE FROM components WHERE id = ?", (project_id,))
+        cursor.execute("DELETE FROM components WHERE componentid = ?", (comp_id,))
         conn.commit()
         conn.close()
 

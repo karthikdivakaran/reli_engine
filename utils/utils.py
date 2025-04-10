@@ -72,7 +72,7 @@ def export_excel(details, filename="output.xlsx"):
     df.to_excel(filename, index=False)
 
 
-def confirm_delete(current_comp, title, message, comp_box):
+def confirm_delete(current_comp, title, message, comp_box=None):
     """ Show confirmation dialog before deleting a row """
     msg = QMessageBox(current_comp)  # Ensure it has a parent
     msg.setIcon(QMessageBox.Warning)
@@ -90,3 +90,8 @@ def confirm_delete(current_comp, title, message, comp_box):
 def load_stylesheet(path):
     with open(path, "r") as f:
         return f.read()
+
+# def handle_home_btn(main_window):
+#     main_window.home_window = MainWindow(main_window)
+#     main_window.home_window.show()
+#     main_window.close()  # Close the login window

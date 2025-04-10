@@ -28,10 +28,11 @@ class MainWindow(QtWidgets.QMainWindow):
         home_controller.handle_component_btn(self)
 
     def handle_calculation_eng(self):
-        home_controller.handle_calc_btn(self)
+        home_window = self
+        home_controller.handle_calc_btn(self, home_window)
 
     def handle_users(self):
-        home_controller.handle_users_btn(self)
+        home_controller.handle_users_btn(self, self)
 
 
 # if __name__ == "__main__":

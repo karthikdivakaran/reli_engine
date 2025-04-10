@@ -9,10 +9,11 @@ from models.users.updateUser import UpdateUserWindow
 
 
 class UserManagementWindow(QWidget):
-    def __init__(self, main_window):
+    def __init__(self, main_window, home_window):
         super().__init__()
         uic.loadUi("gui/user_management/userManagementhome.ui", self)  # Load the .ui file for the GUI
         self.main_window = main_window
+        self.home_window = home_window
 
         # Find GUI elements defined in the .ui file
 

@@ -21,6 +21,7 @@ class UpdateUserWindow(QWidget):
         self.emailID = self.findChild(QWidget, "emailID")
         self.roleField = self.findChild(QWidget, "roleField")
         self.userRolecombo = self.findChild(QWidget, "userRolecombo")
+        self.goBackButton = self.findChild(QPushButton, "backBtn")  # "Back" button
 
         # Preload data into text fields
         self.userName.setText(user_data.get("Name", ""))
@@ -32,6 +33,8 @@ class UpdateUserWindow(QWidget):
 
         if self.updateUserBtn:
             self.updateUserBtn.clicked.connect(self.handle_updateUser)
+        if self.goBackButton:
+            self.goBackButton.clicked.connect(self.goBack)  # Connect go back button to close action
 
     def goBack(self):
         # self.prev_window.refresh_projects()  # Refresh the ProjectsWindow data

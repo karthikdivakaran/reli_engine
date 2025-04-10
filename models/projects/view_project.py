@@ -1,17 +1,15 @@
 import json
 
 from PyQt5 import uic
-from PyQt5.QtWidgets import QWidget, QStyledItemDelegate, QPushButton, QMainWindow, QStyleOptionButton, QStyle
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton
 from PyQt5.QtGui import QIcon
 from database.db_connection import get_connection
-from controllers import home_controller
 from session import Session
-from utils import utils
 
-class ProjectCreateWindow(QWidget):
-    def __init__(self, prev_window, main_window, row=None, result=None):
+class ProjectViewWindow(QWidget):
+    def __init__(self, prev_window, main_window, row=None):
         super().__init__()
-        uic.loadUi("gui/project/create_project.ui", self)  # Load the .ui file for the GUI
+        uic.loadUi("gui/project/view_project.ui", self)  # Load the .ui file for the GUI
         self.prev_window = prev_window
         self.main_window = main_window
         self.user = Session().get_user()
@@ -29,14 +27,43 @@ class ProjectCreateWindow(QWidget):
 
         if self.submitButton:
             self.submitButton.clicked.connect(self.handle_submit)
-        self.calculateFailure.clicked.connect(self.handle_calculate)
         self.row = row
-        self.result = result
         if row:
+            result = self.get_project()
             self.projectName.setText(row["ProjectName"])
-            self.description.setPlainText(row["Description"])
-            self.submitButton.setText("Update Project")
+            self.projectDescription.setText(row["Description"])
+            if result:
+                try:
+                    result = json.loads(result)
+                    self.formula.setText(result['formula'])
+                    self.refresh_data(result)
+                except:
+                    pass
+    def refresh_data(self, result):
+        count = 1
+        items = []
+        for item in result['values']:
+            self.findChild(QLabel, f"compval_{count}").setText(f"{item} = {result['values'][item]['value']}")
+            if "deps" in result['values'][item]:
+                for key_item in result['values'][item]['deps']:
+                    if key_item not in items:
+                        count += 1
+                        items.append(key_item)
+                        self.findChild(QLabel, f"compval_{count}").setText(f"{key_item} = {result['values'][item]['deps'][key_item]}")
+            count += 1
 
+        equation_values = "λ = "
+        for item in result["values"]:
+            if equation_values != "λ = ":
+                equation_values += " * "
+            equation_values += f"{result['values'][item]['value']}"
+        self.findChild(QLabel, f"compval_{count}").setText(equation_values)
+        count += 1
+        try:
+            self.findChild(QLabel, f"compval_{count}").setText(f"λ = {eval(equation_values.split('λ = ')[-1].strip())}")
+        except:
+            self.resultValue.setText(f" Please verify all options are selected correctly")
+        print(result)
     def goBack(self):
         try:
             self.prev_window.refresh_projects()  # Refresh the ProjectsWindow data
@@ -49,23 +76,10 @@ class ProjectCreateWindow(QWidget):
         self.close()
         self.main_window.show()
 
-    def handle_calculate(self):
-        print("clicked")
-        if self.row:
-            home_controller.handle_calc_btn(self, self.main_window, self.row)
-        else:
-            project_name = self.projectName.text()
-            description = self.description.toPlainText()
-            if project_name and description:
-                data = self.create_project(project_name, description)
-                home_controller.handle_calc_btn(self, self.main_window, data)
-            else:
-                utils.confirm_delete(self, "Error", f"Please Fill All Fields")
-
-
     def handle_submit(self):
         project_name = self.projectName.text()
         description = self.description.toPlainText()
+        user_id = 1  # Example ID, replace with actual logic
 
         # Insert the project into the database
         if self.row:
@@ -75,6 +89,17 @@ class ProjectCreateWindow(QWidget):
 
         # Refresh ProjectsWindow and go back
         self.goBack()
+
+    def get_project(self):
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM Project WHERE ProjectID = ?", (self.row['ProjectID'],))
+        columns = [desc[0] for desc in cursor.description]
+        projects = [dict(zip(columns, row)) for row in cursor.fetchall()]
+        conn.close()
+        if projects:
+            return projects[0]['Results']
+        return None
 
     def create_project(self, project_name, description):
         conn = get_connection()
@@ -88,16 +113,8 @@ class ProjectCreateWindow(QWidget):
             cursor.execute(
                 "INSERT INTO Project (ProjectName, Description, CreatedDate, LastModified , UserID) VALUES (?, ?, datetime('now'), datetime('now'), ?)",
                 (project_name, description, self.user["UserID"]))
-        # Get the ID of the inserted row
-        inserted_id = cursor.lastrowid
-
-        # Now fetch the inserted row
-        cursor.execute("SELECT * FROM Project WHERE ProjectID = ?", (inserted_id,))
-        columns = [desc[0] for desc in cursor.description]
-        projects = [dict(zip(columns, row)) for row in cursor.fetchall()]
         conn.commit()
         conn.close()
-        return projects[0]
 
     def update_project(self, project_name, description, project_id):
         conn = get_connection()
