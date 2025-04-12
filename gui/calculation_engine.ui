@@ -247,17 +247,17 @@
     <string>Save As Project</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="export_result">
+  <widget class="QPushButton" name="exportPdf">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>520</y>
-     <width>161</width>
-     <height>41</height>
+     <x>90</x>
+     <y>530</y>
+     <width>81</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>Export Result</string>
+    <string>pdf</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_7">
@@ -556,6 +556,45 @@
      <width>18</width>
      <height>18</height>
     </size>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>530</y>
+     <width>71</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Export</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="exportDoc">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>530</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>word</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="exportXls">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>530</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>excel</string>
    </property>
   </widget>
  </widget>

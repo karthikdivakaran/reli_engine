@@ -39,7 +39,13 @@ class CalculationsWindow(QWidget):
         self.goBackButton.clicked.connect(self.goBack)  # Connect go back button to close action
         self.calculateButton.clicked.connect(self.calculate)
 
-        self.export_result.clicked.connect(self.export_result_to_file)
+        # self.export_result.clicked.connect(self.export_result_to_file)
+        self.exportPdf.setIcon(QIcon("static/icons/pdf.png"))
+        self.exportDoc.setIcon(QIcon("static/icons/word.png"))
+        self.exportXls.setIcon(QIcon("static/icons/excel.png"))
+        self.exportPdf.clicked.connect(self.export_result_to_pdf)
+        self.exportDoc.clicked.connect(self.export_result_to_word)
+        self.exportXls.clicked.connect(self.export_result_to_excel)
 
         self.comp_comboBox = self.findChild(QComboBox, "componentBox")
         self.type_comboBox = self.findChild(QComboBox, "typeComboBox")
@@ -155,7 +161,10 @@ class CalculationsWindow(QWidget):
             except:
                 self.resultValue.setText(f" Please verify all options are selected correctly")
             self.save_project.setEnabled(True)
-            self.export_result.setEnabled(True)
+            # self.export_result.setEnabled(True)
+            self.exportPdf.setEnabled(True)
+            self.exportDoc.setEnabled(True)
+            self.exportXls.setEnabled(True)
         else:
             utils.confirm_delete(self, "Warning", f"Select all values for calculation", self.ref_comboBox)
             return
@@ -361,13 +370,23 @@ class CalculationsWindow(QWidget):
         return items
 
 
-    def export_result_to_file(self):
+    def export_result_to_pdf(self):
         print("Exporting result to file")
-        utils.export_html(self.component_config)
+        utils.export_pdf(self.component_config)
+        utils.download_pdf(self)
+    def export_result_to_word(self):
+        utils.export_to_word(self.component_config)
+        utils.download_word(self)
+    def export_result_to_excel(self):
+        utils.export_excel(self.component_config)
+        utils.download_excel(self)
 
     def clear_items(self):
         self.save_project.setEnabled(False)
-        self.export_result.setEnabled(False)
+        # self.export_result.setEnabled(False)
+        self.exportPdf.setEnabled(True)
+        self.exportDoc.setEnabled(True)
+        self.exportXls.setEnabled(True)
         self.calculateButton.setEnabled(False)
 
         self.val_combo_1.clear()
