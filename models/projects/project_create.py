@@ -52,13 +52,18 @@ class ProjectCreateWindow(QWidget):
     def handle_calculate(self):
         print("clicked")
         if self.row:
-            home_controller.handle_calc_btn(self, self.main_window, self.row)
+            project_details = self.get_project_details(self.row['ProjectID'])
+            try:
+                results = json.loads(project_details['Results'])
+            except:
+                results = {}
+            home_controller.handle_calc_btn(self, self.main_window, self.row, results)
         else:
             project_name = self.projectName.text()
             description = self.description.toPlainText()
             if project_name and description:
                 data = self.create_project(project_name, description)
-                home_controller.handle_calc_btn(self, self.main_window, data)
+                home_controller.handle_calc_btn(self, self.main_window, data['ProjectID'])
             else:
                 utils.confirm_delete(self, "Error", f"Please Fill All Fields")
 
@@ -107,3 +112,14 @@ class ProjectCreateWindow(QWidget):
             (project_name, description, self.user["UserID"], project_id))
         conn.commit()
         conn.close()
+
+    def get_project_details(self, project_id):
+        conn = get_connection()
+        cursor = conn.cursor()
+        # Now fetch the inserted row
+        cursor.execute("SELECT * FROM Project WHERE ProjectID = ?", (project_id,))
+        columns = [desc[0] for desc in cursor.description]
+        projects = [dict(zip(columns, row)) for row in cursor.fetchall()]
+        conn.commit()
+        conn.close()
+        return projects[0]

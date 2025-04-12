@@ -10,6 +10,8 @@ from docx import Document
 from bs4 import BeautifulSoup
 from PyQt5.QtWidgets import QFileDialog
 
+import constants
+
 
 def get_comp_config():
     with open("component_configuration.json", "r", encoding="utf-8") as file:
@@ -35,7 +37,7 @@ def export_pdf(details):
     html_content = template.render(details=details, result=result, equation=equation_val)
 
     # Save HTML file (optional)
-    with open("output.html", "w") as f:
+    with open("output.html", "w", encoding="utf-8") as f:
         f.write(html_content)
     # Convert HTML to PDF
     HTML(string=html_content).write_pdf("output.pdf")
@@ -48,7 +50,7 @@ def export_html(details):
     html_content = template.render(details=details, result=result, equation=equation_val)
 
     # Save HTML file (optional)
-    with open("output.html", "w") as f:
+    with open("output.html", "w", encoding="utf-8") as f:
         f.write(html_content)
     # Convert HTML to PDF
     HTML(string=html_content).write_pdf("output.pdf")
@@ -62,7 +64,7 @@ def export_to_word(details):
     html_content = template.render(details=details, result=result, equation=equation_val)
 
     # Save HTML file (optional)
-    with open("output.html", "w") as f:
+    with open("output.html", "w", encoding="utf-8") as f:
         f.write(html_content)
     # Create a new Word Document
     document = Document()
@@ -90,7 +92,40 @@ def export_to_word(details):
     document.save("output.docx")
 
 def export_excel(details, filename="output.xlsx"):
-    df = pd.DataFrame(details["values"])
+    data = []
+    keys = []
+    for key in details:
+        if type(details[key]) == str:
+            if key not in keys:
+                data.append([key.capitalize(), details[key],"","","","","","","","","",""])
+                keys.append(key)
+        elif type(details[key]) == list:
+            for item in details[key]:
+                for it_key, it_val in item.items():
+                    if it_key not in keys:
+                        data.append([it_key.capitalize(), it_val,"","","","","","","","","",""])
+                        keys.append(it_key)
+        elif type(details[key]) == dict:
+            for key_item, key_data in details[key].items():
+                temp = []
+                # temp.append(key_item)
+                temp.append(f"{key_item} = {key_data['value']}")
+                if "deps" in key_data:
+                    for sub_key in key_data['deps']:
+                        key_value = sub_key
+                        if sub_key in constants.key_map:
+                            key_value = constants.key_map[sub_key]
+                        temp.append(f"{key_value} = {key_data['deps'][sub_key]}")
+                temp.extend(["","","","","","","",""])
+                data.append(temp)
+    result = ""
+
+    for key, item in details['values'].items():
+        result += f" {item['value']} *"
+    result = eval(result[:-1])
+    data.append([f"Result = {result}"])
+
+    df = pd.DataFrame(data)
     df.to_excel(filename, index=False)
 
 

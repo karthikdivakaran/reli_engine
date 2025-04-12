@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton
 from PyQt5.QtGui import QIcon
 from database.db_connection import get_connection
 from session import Session
+from utils import utils
 
 class ProjectViewWindow(QWidget):
     def __init__(self, prev_window, main_window, row=None):
@@ -28,6 +29,7 @@ class ProjectViewWindow(QWidget):
         if self.submitButton:
             self.submitButton.clicked.connect(self.handle_submit)
         self.row = row
+        self.result = None
         if row:
             result = self.get_project()
             self.projectName.setText(row["ProjectName"])
@@ -37,8 +39,21 @@ class ProjectViewWindow(QWidget):
                     result = json.loads(result)
                     self.formula.setText(result['formula'])
                     self.refresh_data(result)
+                    self.result = result
                 except:
                     pass
+        if self.result:
+            self.exportPdf.setIcon(QIcon("static/icons/pdf.png"))
+            self.exportDoc.setIcon(QIcon("static/icons/word.png"))
+            self.exportXls.setIcon(QIcon("static/icons/excel.png"))
+            self.exportPdf.clicked.connect(self.export_result_to_pdf)
+            self.exportDoc.clicked.connect(self.export_result_to_word)
+            self.exportXls.clicked.connect(self.export_result_to_excel)
+        else:
+            self.exportPdf.setVisible(False)
+            self.exportDoc.setVisible(False)
+            self.exportXls.setVisible(False)
+
     def refresh_data(self, result):
         count = 1
         items = []
@@ -75,6 +90,17 @@ class ProjectViewWindow(QWidget):
     def handle_home(self):
         self.close()
         self.main_window.show()
+
+    def export_result_to_pdf(self):
+        print("Exporting result to file")
+        utils.export_pdf(self.result)
+        utils.download_pdf(self)
+    def export_result_to_word(self):
+        utils.export_to_word(self.result)
+        utils.download_word(self)
+    def export_result_to_excel(self):
+        utils.export_excel(self.result)
+        utils.download_excel(self)
 
     def handle_submit(self):
         project_name = self.projectName.text()
