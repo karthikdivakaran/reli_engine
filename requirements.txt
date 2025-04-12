@@ -1,0 +1,7 @@
+PyQt5
+pandas
+weasyprint
+jinja2
+python-docx
+bs4
+openpyxl

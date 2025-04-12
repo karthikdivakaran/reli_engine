@@ -16,8 +16,8 @@ def handle_component_btn(main_window):
     main_window.hide()
 
 
-def handle_calc_btn(main_window, home_window, project_id=None):
-    main_window.second_window = CalculationsWindow(main_window, home_window, project_id)
+def handle_calc_btn(main_window, home_window, project_id=None, results=None):
+    main_window.second_window = CalculationsWindow(main_window, home_window, project_id, results)
     main_window.second_window.show()
     main_window.hide()
 

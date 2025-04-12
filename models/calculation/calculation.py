@@ -15,7 +15,7 @@ from session import Session
 
 
 class CalculationsWindow(QWidget):
-    def __init__(self, main_window, home_window, project_id=None):
+    def __init__(self, main_window, home_window, project_id=None, results=None):
         super().__init__()
         uic.loadUi("gui/calculation_engine.ui", self)  # Load the .ui file for the GUI
         self.main_window = main_window
@@ -26,6 +26,9 @@ class CalculationsWindow(QWidget):
         self.prev_key = {}
         self.component = None
         self.user = Session().get_user()
+        self.results = results
+        if results:
+            self.component_config = results
 
         self.theetta_1 = None
         self.project_id = project_id
@@ -56,6 +59,7 @@ class CalculationsWindow(QWidget):
         if self.homeButton:
             self.homeBtn.setIcon(QIcon("static/icons/home.png"))
             self.homeButton.clicked.connect(self.handle_home)
+        self.clear_items()
 
         self.comp_comboBox.clear()
         self.type_comboBox.clear()
@@ -65,7 +69,6 @@ class CalculationsWindow(QWidget):
         self.type_comboBox.addItem("Select Option")
         self.ref_comboBox.addItem("Select Option")
         self.tmp_comboBox.addItem("Select Option")
-        self.clear_items()
 
         self.components_list = self.get_all_components()
         self.comp_comboBox.currentIndexChanged.connect(self.update_components)
@@ -77,6 +80,31 @@ class CalculationsWindow(QWidget):
         self.save_project.clicked.connect(self.save_project_data)
         if project_id:
             self.save_project.setText("Save")
+
+        if self.results:
+            com_index = self.comp_comboBox.findText(results['name'])
+            if com_index != -1:
+                self.comp_comboBox.setCurrentIndex(com_index)
+            for item in results['additional_data']:
+                for key in item:
+                    if key == "type":
+                        idx = self.type_comboBox.findText(item[key])
+                        if idx != -1:
+                            self.type_comboBox.setCurrentIndex(idx)
+                    elif key == "reference":
+                        idx = self.ref_comboBox.findText(item[key])
+                        if idx != -1:
+                            self.ref_comboBox.setCurrentIndex(idx)
+                    else:
+                        continue
+            for key, item in results['values'].items():
+                if "deps" in item:
+                    if "theetta2" in item['deps']:
+                        idx = self.tempComboBox.findText(item['deps']['theetta2'])
+                        if idx != -1:
+                            self.tempComboBox.setCurrentIndex(idx)
+            self.calculate()
+            self.results = None
 
     def goBack(self):
         self.close()  # Close the Components window
@@ -117,7 +145,7 @@ class CalculationsWindow(QWidget):
                 self.hide()
 
     def update_values(self):
-        if self.component_config:
+        if self.component_config and not self.results:
             if "Pi_T" in self.component_config["values"] and "deps" in self.component_config["values"]["Pi_T"]:
                 value = self.get_pi_value()
                 if value:
@@ -145,7 +173,7 @@ class CalculationsWindow(QWidget):
                 if self.component_config["values"][key]["value"]:
                     continue
                 deps = self.component_config["values"][key].get("deps")
-                if deps:
+                if deps and not self.results:
                     val = self.get_value(deps=deps)
                     self.component_config["values"][key]["value"] = val
 
@@ -252,52 +280,56 @@ class CalculationsWindow(QWidget):
         type = self.type_comboBox.currentText() if self.type_comboBox.currentText() else None
         ref = self.ref_comboBox.currentText() if  self.ref_comboBox.currentText() else None
         if compn.strip().lower() in self.config:
-            self.component_config = copy.deepcopy(self.config.get(compn.strip().lower()))
-            if {"name": compn} not in self.component_config["additional_data"]:
-                self.component_config["additional_data"].append({"name": compn})
+            if not self.results:
+                self.component_config = copy.deepcopy(self.config.get(compn.strip().lower()))
+                if {"name": compn} not in self.component_config["additional_data"]:
+                    self.component_config["additional_data"].append({"name": compn})
             for comp in self.components_list:
                 if ref == 'nil' and not comp["reference"]:
                     ref = None
                 if comp["name"] == compn and comp["type"] == type and ref == comp["reference"]:
-                    if {"type": type} not in self.component_config["additional_data"]:
-                        self.component_config["additional_data"].append({"type": type})
-                    if {"reference": ref} not in self.component_config["additional_data"]:
-                        self.component_config["additional_data"].append({"reference": ref})
+                    if not self.results:
+                        if {"type": type} not in self.component_config["additional_data"]:
+                            self.component_config["additional_data"].append({"type": type})
+                        if {"reference": ref} not in self.component_config["additional_data"]:
+                            self.component_config["additional_data"].append({"reference": ref})
                     self.refTemp.setText(f"{comp['theetta1']} °C")
                     self.refFail.setText(f"{comp['λref']}")
-                    for key, item in self.component_config["values"].items():
-                        if 'deps' in item and "theetta1" in item["deps"]:
-                            item["deps"]["theetta1"] = comp['theetta1']
-                        elif 'deps' in item and "type" in item["deps"]:
-                            item["deps"]["type"] = type
+                    if not self.results:
+                        for key, item in self.component_config["values"].items():
+                            if 'deps' in item and "theetta1" in item["deps"]:
+                                item["deps"]["theetta1"] = comp['theetta1']
+                            elif 'deps' in item and "type" in item["deps"]:
+                                item["deps"]["type"] = type
 
-                    self.component_config["values"]["λref"]["value"] = float(comp["λref"]) if comp.get("λref") else 1
+                        self.component_config["values"]["λref"]["value"] = float(comp["λref"]) if comp.get("λref") else 1
         self.update_temp_select()
         self.update_items()
 
 
     def get_pi_value(self):
-        if "deps" in self.component_config["values"]["Pi_T"]:
-            if "theetta1" in self.component_config["values"]["Pi_T"]["deps"]:
-                compn = self.comp_comboBox.currentText()
-                theetta2 = self.tempComboBox.currentText()
-                theetta_1 = self.component_config["values"]["Pi_T"]["deps"]["theetta1"]
-                self.component_config["values"]["Pi_T"]["deps"]["theetta2"] = theetta2
-                conn = get_connection()
-                cursor = conn.cursor()
-                query = "SELECT * FROM env_factors WHERE component = ? AND theetta1 = ? AND theetta2 = ?"
-                cursor.execute(query, (compn, theetta_1, theetta2))
-                results = cursor.fetchall()
-                column_names = [desc[0] for desc in cursor.description]
+        if not self.results:
+            if "deps" in self.component_config["values"]["Pi_T"]:
+                if "theetta1" in self.component_config["values"]["Pi_T"]["deps"]:
+                    compn = self.comp_comboBox.currentText()
+                    theetta2 = self.tempComboBox.currentText()
+                    theetta_1 = self.component_config["values"]["Pi_T"]["deps"]["theetta1"]
+                    self.component_config["values"]["Pi_T"]["deps"]["theetta2"] = theetta2
+                    conn = get_connection()
+                    cursor = conn.cursor()
+                    query = "SELECT * FROM env_factors WHERE component = ? AND theetta1 = ? AND theetta2 = ?"
+                    cursor.execute(query, (compn, theetta_1, theetta2))
+                    results = cursor.fetchall()
+                    column_names = [desc[0] for desc in cursor.description]
 
-                # Map rows to dictionaries
-                result_list = [dict(zip(column_names, comp)) for comp in results]
-                conn.close()
-                for item in result_list:
-                    if item["Pi_T"] is not None:
-                        return item["Pi_T"]
-            else:
-                return None
+                    # Map rows to dictionaries
+                    result_list = [dict(zip(column_names, comp)) for comp in results]
+                    conn.close()
+                    for item in result_list:
+                        if item["Pi_T"] is not None:
+                            return item["Pi_T"]
+                else:
+                    return None
         return None
 
     def get_extra_values(self, key, value, item_key, com_type=None):
@@ -368,7 +400,6 @@ class CalculationsWindow(QWidget):
             if item["theetta2"] is not None and item["theetta2"] not in items:
                 items.append(item["theetta2"])
         return items
-
 
     def export_result_to_pdf(self):
         print("Exporting result to file")
@@ -446,8 +477,9 @@ class CalculationsWindow(QWidget):
                     if  len(dep_keys)==1:
                         label = self.findChild(QLabel, f"val_label{index}")
                         if type_val and type_val not in constants.exclude_options:
-                            value = self.get_extra_values("type", type_val, key)
-                            item["value"] = value
+                            if not self.results:
+                                value = self.get_extra_values("type", type_val, key)
+                                item["value"] = value
                             label.setText(f"{key} : {item['value']}")
                     else:
                         for dep_key in dep_keys:
@@ -470,12 +502,19 @@ class CalculationsWindow(QWidget):
                                     comb_box.currentIndexChanged.connect(self.update_env_values)
                                     if len(temp_items) == 1:
                                         comb_box.setCurrentIndex(1)
+                                    if self.results:
+                                        val = self.results["values"][key]['deps'][dep_key]
+                                        idx = comb_box.findText(val)
+                                        if idx != -1:
+                                            comb_box.setCurrentIndex(idx)
+
 
                 elif "reference" in item["deps"]:
                     label = self.findChild(QLabel, f"val_label{index}")
                     ref = self.ref_comboBox.currentText().strip()
-                    value = self.get_extra_values("reference", ref, key)
-                    item["value"] = value
+                    if not self.results:
+                        value = self.get_extra_values("reference", ref, key)
+                        item["value"] = value
                     label.setText(f"{key} : {item['value']}")
                 else:
                     for val in item["deps"]:
@@ -496,6 +535,12 @@ class CalculationsWindow(QWidget):
                                 comb_box.currentIndexChanged.connect(self.update_env_values)
                                 if len(temp_items) == 1:
                                     comb_box.setCurrentIndex(1)
+                                if self.results:
+                                    it_value = self.results["values"][key]['deps'][val]
+                                    idx = comb_box.findText(it_value)
+                                    if idx != -1:
+                                        comb_box.setCurrentIndex(idx)
+
             elif "constant" in item:
                 label = self.findChild(QLabel, f"val_label{index}")
                 label.setText(f"{key} : {item['value']}")
@@ -517,12 +562,14 @@ class CalculationsWindow(QWidget):
                 if "type" in self.component_config["values"][item_key]["deps"] and key != "type":
                     type_val = self.type_comboBox.currentText().strip()
                     comp_value = self.get_extra_values(key, value, item_key, type_val)
-                    self.component_config["values"][item_key]["deps"]["type"] = type_val
+                    if not self.results:
+                        self.component_config["values"][item_key]["deps"]["type"] = type_val
                 else:
                     comp_value = self.get_extra_values(key, value, item_key)
                 if comp_value:
-                    self.component_config["values"][item_key]["value"] = comp_value
-                    self.component_config["values"][item_key]["deps"][key] = value
+                    if not self.results:
+                        self.component_config["values"][item_key]["value"] = comp_value
+                        self.component_config["values"][item_key]["deps"][key] = value
 
                     # text = self.findChild(QLabel, f"val_label{index}").text()
                     # self.findChild(QLabel, f"val_label{index}").setText(text+" "+comp_value)
