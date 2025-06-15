@@ -1,12 +1,13 @@
+import datetime
 import json
 import copy
 
 from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget, QPushButton, QComboBox, QLabel, QLineEdit, QVBoxLayout
 from PyQt5.QtGui import QIcon
+import math
 
 import constants
-from models.calculation.calculate_fr import *
 from database.db_connection import get_connection
 from models.projects.project_create import ProjectCreateWindow
 from models.projects.view_project import ProjectViewWindow
@@ -103,6 +104,9 @@ class CalculationsWindow(QWidget):
                         idx = self.tempComboBox.findText(item['deps']['theetta2'])
                         if idx != -1:
                             self.tempComboBox.setCurrentIndex(idx)
+
+            duration_hr = self.results['duration']
+            self.reliDuration.setText(duration_hr)
             self.calculate()
             self.results = None
 
@@ -120,8 +124,8 @@ class CalculationsWindow(QWidget):
             project_id = self.project_id['ProjectID']
         conn = get_connection()
         cursor = conn.cursor()
-        cursor.execute("UPDATE Project SET Results = ? WHERE UserID = ? and ProjectID = ?",
-            (json.dumps(result), self.user["UserID"], project_id))
+        cursor.execute("UPDATE Project SET Results = ?, LastModified = ? WHERE UserID = ? and ProjectID = ?",
+            (json.dumps(result), datetime.datetime.now(), self.user["UserID"], project_id))
 
         cursor.execute("SELECT * FROM Project WHERE ProjectID = ?", (project_id,))
 
@@ -153,11 +157,18 @@ class CalculationsWindow(QWidget):
             self.update_items()
     def validate_comp(self):
         valid = True
+        duration_hr = self.reliDuration.text()
         if self.component and self.component not in constants.exclude_options:
             for _, component_item in self.component_config["values"].items():
                 if not component_item["value"]:
                     valid = False
         else:
+            valid = False
+        if not duration_hr:
+            valid = False
+        try:
+            int(duration_hr)
+        except:
             valid = False
         return  valid
 
@@ -184,10 +195,13 @@ class CalculationsWindow(QWidget):
                     equation_values += " * "
                 equation_values += f"{self.component_config['values'][item]['value']}"
             self.equation_2.setText(equation_values)
+            lambda_val = 0
             try:
-                self.resultValue.setText(f"λ = {eval(equation_values.split('λ = ')[-1].strip())}")
+                lambda_val = eval(equation_values.split('λ = ')[-1].strip())
+                self.resultValue.setText(f"λ = {lambda_val} * 10\u207B\u2079")
             except:
                 self.resultValue.setText(f" Please verify all options are selected correctly")
+            self.calculate_reliability(lambda_val)
             self.save_project.setEnabled(True)
             # self.export_result.setEnabled(True)
             self.exportPdf.setEnabled(True)
@@ -196,6 +210,20 @@ class CalculationsWindow(QWidget):
         else:
             utils.confirm_delete(self, "Warning", f"Select all values for calculation", self.ref_comboBox)
             return
+    def calculate_reliability(self, lambda_val):
+        seperator = "-"
+        if not self.results:
+            duration_hr = self.reliDuration.text()
+            self.resultLab_5.setText(f"= e^{{{seperator}{lambda_val* (10 ** -9):.12f}*{duration_hr}}}")
+            reliability = math.exp(-(lambda_val* (10 ** -9)) * float(duration_hr))
+            self.resultLab_6.setText(f" R(t) =  {reliability}")
+            self.component_config['reliability'] = reliability
+            self.component_config['duration'] = duration_hr
+        else:
+            duration_hr = self.results['duration']
+            self.resultLab_5.setText(f"= e^{{{seperator}{lambda_val* (10 ** -9):.12f}*{duration_hr}}}")
+            reliability = math.exp(-(lambda_val* (10 ** -9)) * float(duration_hr))
+            self.resultLab_6.setText(f" R(t) =  {reliability}")
 
     def get_all_components(self):
         conn = get_connection()
@@ -340,10 +368,10 @@ class CalculationsWindow(QWidget):
             query = "SELECT * FROM env_factors WHERE component = ? AND type = ?"
             cursor.execute(query, (compn, value))
         elif com_type:
-            query = f"SELECT * FROM env_factors WHERE component = ? AND env_varibale = ? AND env_value = ? AND type = ?"
+            query = f"SELECT * FROM env_factors WHERE component = ? AND env_variable = ? AND env_value = ? AND type = ?"
             cursor.execute(query, (compn, key, value, com_type))
         else:
-            query = f"SELECT * FROM env_factors WHERE component = ? AND env_varibale = ? AND env_value = ?"
+            query = f"SELECT * FROM env_factors WHERE component = ? AND env_variable = ? AND env_value = ?"
             cursor.execute(query, (compn, key, value))
         results = cursor.fetchall()
         column_names = [desc[0] for desc in cursor.description]
@@ -366,10 +394,10 @@ class CalculationsWindow(QWidget):
             conn = get_connection()
             cursor = conn.cursor()
             if comp_type:
-                query = "SELECT * FROM env_factors WHERE component = ? AND env_varibale = ? AND type = ?"
+                query = "SELECT * FROM env_factors WHERE component = ? AND env_variable = ? AND type = ?"
                 cursor.execute(query, (compn, key, comp_type))
             else:
-                query = "SELECT * FROM env_factors WHERE component = ? AND env_varibale = ?"
+                query = "SELECT * FROM env_factors WHERE component = ? AND env_variable = ?"
                 cursor.execute(query, (compn, key))
             results = cursor.fetchall()
             column_names = [desc[0] for desc in cursor.description]
@@ -428,6 +456,11 @@ class CalculationsWindow(QWidget):
         self.val_combo_6.clear()
         self.val_combo_7.clear()
         self.val_combo_8.clear()
+        self.reliDuration.setText("")
+        self.equation_2.setText("")
+        self.resultValue.setText("")
+        self.resultLab_5.setText("")
+        self.resultLab_6.setText("")
 
         self.val_combo_1.setVisible(False)
         self.val_combo_2.setVisible(False)
@@ -473,7 +506,7 @@ class CalculationsWindow(QWidget):
                     label.setText(f"{key} : {item['value']}")
                 elif "type" in item["deps"]:
                     dep_keys = list(item["deps"].keys())
-                    type_val = self.type_comboBox.currentText().strip()
+                    type_val = self.currentText.currentText().strip()
                     if  len(dep_keys)==1:
                         label = self.findChild(QLabel, f"val_label{index}")
                         if type_val and type_val not in constants.exclude_options:

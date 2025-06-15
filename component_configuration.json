@@ -2,6 +2,8 @@
   "components": {
     "resistors": {
       "name": "",
+      "reliability": "",
+      "duration": "",
       "formula": "λref * Pi_T",
       "additional_data": [],
       "values": {
@@ -22,6 +24,8 @@
     },
     "inductors": {
       "name": "",
+      "reliability": "",
+      "duration": "",
       "formula": "λref * Pi_T",
       "additional_data": [],
       "values": {
@@ -42,6 +46,8 @@
     },
     "diodes": {
       "name": "",
+      "reliability": "",
+      "duration": "",
       "formula": "λref * Pi_T * Pi_D",
       "additional_data": [],
       "values": {
@@ -66,6 +72,8 @@
     },
     "z-diodes": {
       "name": "",
+      "reliability": "",
+      "duration": "",
       "formula": "λref * Pi_T",
       "additional_data": [],
       "values": {
@@ -86,6 +94,8 @@
     },
     "power semiconductor": {
       "name": "",
+      "reliability": "",
+      "duration": "",
       "formula": "λref * Pi_T",
       "additional_data": [],
       "values": {
@@ -106,6 +116,8 @@
     },
     "transistors": {
       "name": "",
+      "reliability": "",
+      "duration": "",
       "formula": "λref * Pi_U  * Pi_T * Pi_D",
       "additional_data": [],
       "values": {
@@ -136,6 +148,8 @@
     },
     "plug-in contacts that must be inserted without electrical load": {
       "name": "",
+      "reliability": "",
+      "duration": "",
       "formula": "λref",
       "additional_data": [],
       "values": {
@@ -147,6 +161,8 @@
     },
     "contactors": {
       "name": "",
+      "reliability": "",
+      "duration": "",
       "formula": "λref * Pi_S * Pi_U * Pi_I * Pi_T * Pi_E",
       "additional_data": [],
       "values": {
@@ -184,6 +200,8 @@
     },
     "memories": {
       "name": "",
+      "reliability": "",
+      "duration": "",
       "formula": "λref * Pi_T",
       "additional_data": [],
       "values": {
@@ -204,6 +222,8 @@
     },
     "analog integrated circuit": {
       "name": "",
+      "reliability": "",
+      "duration": "",
       "formula": "λref * Pi_U  * Pi_T * Pi_D",
       "additional_data": [],
       "values": {
@@ -223,7 +243,7 @@
         "Pi_U": {
           "value": "",
           "deps": {
-            "Voltage ratio U/Umax": ""
+            "Voltage  ratio U/Umax": ""
           }
         },
         "Pi_D": {
@@ -234,6 +254,8 @@
     },
     "digital logic families and bus interfaces,busdriver and receiver circuit": {
       "name": "",
+      "reliability": "",
+      "duration": "",
       "formula": "λref * Pi_U * Pi_T",
       "additional_data": [],
       "values": {
@@ -260,6 +282,8 @@
     },
     "switches and buttons": {
       "name": "",
+      "reliability": "",
+      "duration": "",
       "formula": "λref * Pi_L * Pi_E ",
       "additional_data": [],
       "values": {
@@ -283,6 +307,8 @@
     },
     "automotive relays": {
       "name": "",
+      "reliability": "",
+      "duration": "",
       "formula": "λref * Pi_L * Pi_T * Pi_E * Pi_K",
       "additional_data": [],
       "values": {
@@ -314,6 +340,8 @@
     },
     "low-duty relays": {
       "name": "",
+      "reliability": "",
+      "duration": "",
       "formula": "λref * Pi_L * Pi_T * Pi_E * Pi_K",
       "additional_data": [],
       "values": {
@@ -345,6 +373,8 @@
     },
     "solder": {
       "name": "",
+      "reliability": "",
+      "duration": "",
       "formula": "λref",
       "additional_data": [],
       "values": {
@@ -356,6 +386,7 @@
     },
     "capacitor": {
       "name": "",
+      "reliability": "",
       "formula": "λref * Pi_U * Pi_T * Pi_Q",
       "additional_data": [],
       "values": {

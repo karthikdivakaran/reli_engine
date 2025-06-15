@@ -1,0 +1,10 @@
+id,value
+1,type
+2,Voltage  ratio U/Umax
+3,U/Umax
+4,Reference Temperature
+5,Operational Temperature
+6,Operating voltage U in V
+7,Current ratio (I/Ie)
+8,Mean Actual Ambient Temperature ᶿu
+9,reference

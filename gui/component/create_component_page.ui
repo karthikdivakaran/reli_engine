@@ -1,0 +1,1106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>802</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
+  <property name="windowTitle">
+   <string>Components</string>
+  </property>
+  <widget class="QPushButton" name="backBtn">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>0</y>
+     <width>113</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Go Back</string>
+   </property>
+  </widget>
+  <widget class="QTableView" name="tableView">
+   <property name="geometry">
+    <rect>
+     <x>-5</x>
+     <y>41</y>
+     <width>811</width>
+     <height>521</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>70</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Component Name  :</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="nextBtm">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>680</x>
+     <y>510</y>
+     <width>101</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Next</string>
+   </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
+   <property name="default">
+    <bool>false</bool>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="refTemp">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>200</y>
+     <width>60</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="compName">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>70</y>
+     <width>201</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>Component Name</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="equation">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>120</y>
+     <width>571</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>λref * Pi_S * Pi_U * Pi_I * Pi_T * Pi_E</string>
+   </property>
+   <property name="placeholderText">
+    <string>Component Name</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>110</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Equation                  :</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="vaiable_label_1">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>180</y>
+     <width>61</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>q1</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="vaiable_label_2">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>230</y>
+     <width>61</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>q1</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="vaiable_label_3">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>270</y>
+     <width>61</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>q1</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="vaiable_label_4">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>310</y>
+     <width>61</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>q1</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="vaiable_label_5">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>350</y>
+     <width>61</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>q1</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="vaiable_label_6">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>390</y>
+     <width>61</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>q1</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="vaiable_label_7">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>420</y>
+     <width>61</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>q1</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="vaiable_label_8">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>460</y>
+     <width>61</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>q1</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="select_val_1">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>190</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Select Option</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_val_2">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>240</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Select Option</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_val_3">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>280</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Select Option</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_val_4">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>320</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Select Option</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_val_5">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>360</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Select Option</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_val_6">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>400</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Select Option</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_val_7">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>440</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Select Option</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_val_8">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>480</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Select Option</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_1_1">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>190</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_2_1">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>240</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_3_1">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>280</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_4_1">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>320</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_5_1">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>360</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_6_1">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>400</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_7_1">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>440</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_8_1">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>480</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_1_2">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>190</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_1_3">
+   <property name="geometry">
+    <rect>
+     <x>630</x>
+     <y>190</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_2_2">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>240</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_2_3">
+   <property name="geometry">
+    <rect>
+     <x>630</x>
+     <y>240</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_3_2">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>280</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_3_3">
+   <property name="geometry">
+    <rect>
+     <x>630</x>
+     <y>280</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_4_2">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>320</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_4_3">
+   <property name="geometry">
+    <rect>
+     <x>630</x>
+     <y>320</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_5_2">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>360</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_5_3">
+   <property name="geometry">
+    <rect>
+     <x>630</x>
+     <y>360</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_6_2">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>400</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_6_3">
+   <property name="geometry">
+    <rect>
+     <x>630</x>
+     <y>400</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_7_2">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>440</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_7_3">
+   <property name="geometry">
+    <rect>
+     <x>630</x>
+     <y>440</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_8_2">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>480</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="select_option_val_8_3">
+   <property name="geometry">
+    <rect>
+     <x>630</x>
+     <y>480</y>
+     <width>131</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>constant</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>depends</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLineEdit" name="const_value_1">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>180</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="const_value_2">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>230</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="const_value_3">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>270</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="const_value_4">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>310</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="const_value_5">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>350</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="const_value_6">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>390</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="const_value_7">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>430</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="const_value_8">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>470</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="deps_label_1">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>180</y>
+     <width>71</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>depends</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="deps_label_2">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>230</y>
+     <width>71</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>depends</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="deps_label_3">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>270</y>
+     <width>71</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>depends</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="deps_label_4">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>310</y>
+     <width>71</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>depends</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="deps_label_5">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>350</y>
+     <width>71</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>depends</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="deps_label_6">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>390</y>
+     <width>71</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>depends</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="deps_label_7">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>430</y>
+     <width>71</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>depends</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="deps_label_8">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>470</y>
+     <width>71</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>depends</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

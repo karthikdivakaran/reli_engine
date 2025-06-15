@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from PyQt5 import uic
@@ -108,8 +109,8 @@ class ProjectCreateWindow(QWidget):
         conn = get_connection()
         cursor = conn.cursor()
         cursor.execute(
-            "UPDATE Project SET ProjectName = ?, Description = ? WHERE UserID = ? and ProjectID = ?",
-            (project_name, description, self.user["UserID"], project_id))
+            "UPDATE Project SET ProjectName = ?, Description = ?, LastModified = ? WHERE UserID = ? and ProjectID = ?",
+            (project_name, description, datetime.datetime.now(), self.user["UserID"], project_id))
         conn.commit()
         conn.close()
 

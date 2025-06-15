@@ -1,8 +1,10 @@
 import json
-
+import math
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton
 from PyQt5.QtGui import QIcon
+
+import constants
 from database.db_connection import get_connection
 from session import Session
 from utils import utils
@@ -56,17 +58,35 @@ class ProjectViewWindow(QWidget):
 
     def refresh_data(self, result):
         count = 1
+        self.findChild(QLabel, f"compval_{count}").setText(f"Component   : {result['name']}")
+        count += 1
+        for item in result['additional_data']:
+            for key in item:
+                if key in ['name']:
+                    continue
+                if not item[key]:
+                    continue
+                self.findChild(QLabel, f"compval_{count}").setText(f"{key.capitalize()}   : {item[key]}")
+                count += 1
         items = []
+        if count %2 == 0:
+            count += 1
         for item in result['values']:
             self.findChild(QLabel, f"compval_{count}").setText(f"{item} = {result['values'][item]['value']}")
             if "deps" in result['values'][item]:
                 for key_item in result['values'][item]['deps']:
+                    if key_item in ['type']:
+                        continue
                     if key_item not in items:
                         count += 1
                         items.append(key_item)
-                        self.findChild(QLabel, f"compval_{count}").setText(f"{key_item} = {result['values'][item]['deps'][key_item]}")
+                        key_item_val = key_item
+                        if key_item in constants.key_map:
+                            key_item_val = constants.key_map[key_item]
+                        self.findChild(QLabel, f"compval_{count}").setText(f"{key_item_val} = {result['values'][item]['deps'][key_item]}")
             count += 1
-
+        if count % 2 == 0:
+            count += 1
         equation_values = "λ = "
         for item in result["values"]:
             if equation_values != "λ = ":
@@ -74,10 +94,24 @@ class ProjectViewWindow(QWidget):
             equation_values += f"{result['values'][item]['value']}"
         self.findChild(QLabel, f"compval_{count}").setText(equation_values)
         count += 1
+        if count % 2 == 0:
+            count += 1
+        lambda_val = 0
         try:
-            self.findChild(QLabel, f"compval_{count}").setText(f"λ = {eval(equation_values.split('λ = ')[-1].strip())}")
+            lambda_val = eval(equation_values.split('λ = ')[-1].strip())
+            self.findChild(QLabel, f"compval_{count}").setText(f"λ = {lambda_val} * 10\u207B\u2079")
         except:
             self.resultValue.setText(f" Please verify all options are selected correctly")
+        duration_hr = result['duration']
+        count += 1
+        if count%2 ==0:
+            count += 1
+        self.findChild(QLabel, f"compval_{count}").setText("Reliability R(t) =  e^{-λt} ")
+        count += 2
+        self.findChild(QLabel, f"compval_{count}").setText(f"= e^{{-{lambda_val* (10 ** -9):.12f}*{duration_hr}}}")
+        reliability = math.exp(-(lambda_val* (10 ** -9)) * float(duration_hr))
+        count += 2
+        self.findChild(QLabel, f"compval_{count}").setText(f" R(t) =  {reliability:.12f}")
         print(result)
     def goBack(self):
         try:
@@ -93,13 +127,13 @@ class ProjectViewWindow(QWidget):
 
     def export_result_to_pdf(self):
         print("Exporting result to file")
-        utils.export_pdf(self.result)
+        utils.export_pdf(self.result, created_data=self.row["CreatedDate"], updated=self.row["LastModified"])
         utils.download_pdf(self)
     def export_result_to_word(self):
-        utils.export_to_word(self.result)
+        utils.export_to_word(self.result, created_data=self.row["CreatedDate"], updated=self.row["LastModified"])
         utils.download_word(self)
     def export_result_to_excel(self):
-        utils.export_excel(self.result)
+        utils.export_excel(self.result, created_data=self.row["CreatedDate"], updated=self.row["LastModified"])
         utils.download_excel(self)
 
     def handle_submit(self):

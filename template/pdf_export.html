@@ -3,77 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reliability Calculation Result</title>
+    <title>Reliability and Failure rate Calculation Result</title>
     <link href="template/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-body-tertiary">
     <main class="container">
-        <div class="d-flex align-items-center p-3 my-3 bg-purple rounded shadow-sm">
+        {% for index, item in enumerate(details)%}
+            {% if index in [0] or "Reliability Calculation for" in item[0] %}
+                <div class="d-flex align-items-center p-3 my-3 bg-purple rounded shadow-sm">
 
-            <div class="lh-1 text-center w-100">
-              <h1 class="h6 mb-0 lh-1">Reliability Calculation Result</h1>
+                    <div class="lh-1 text-center w-100">
+                      <h2 class="h6 mb-0 lh-1">{{item[0]}}</h2>
+                    </div>
+                  </div>
+                <div class="my-3 p-3 bg-body rounded shadow-sm">
+            {%else%}
+                <div class="d-flex text-body-secondary pt-3">
+                  <p class="pb-3 mb-0 small lh-sm border-bottom">
+                    <strong class="d-block text-gray-dark">{{item[0]}} </strong> = {{item[1]}}
+                  </p>
+                </div>
+            {%endif%}
             </div>
-          </div>
-
-        <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <h6 class="border-bottom pb-2 mb-0">Equation</h6>
-        <div class="d-flex text-body-secondary pt-3">
-          <p class="pb-3 mb-0 small lh-sm border-bottom">
-            <strong class="d-block text-gray-dark">{{details["formula"]}}</strong>
-          </p>
-        </div>
-
-      </div>
-    {%for key, item in details["values"].items()%}
-      <div class="my-3 p-3 bg-body rounded shadow-sm">
-<!--        <h6 class="border-bottom pb-2 mb-0">{{key}}</h6>-->
-            {% for val in item %}
-                {% if val == "value"%}
-                    <div class="d-flex text-body-secondary pt-3">
-                      <p class="pb-3 mb-0 small lh-sm border-bottom">
-                        <strong class="d-block text-gray-dark">Component {{key}} </strong> = {{item[val]}}
-                      </p>
-                    </div>
-                {% elif val == "constant" %}
-                    <div class="d-flex text-body-secondary pt-3">
-                      <p class="pb-3 mb-0 small lh-sm border-bottom">
-                        <strong class="d-block text-gray-dark">{{key}} Value is Constant</strong>
-                      </p>
-                    </div>
-                {% elif val != "deps" %}
-                    <div class="d-flex text-body-secondary pt-3">
-                      <p class="pb-3 mb-0 small lh-sm border-bottom">
-                        <strong class="d-block text-gray-dark">{{val}} </strong> = {{item[val]}}
-                      </p>
-                    </div>
-                {%else%}
-                    {% for sub_key in item[val]%}
-                        <div class="d-flex text-body-secondary pt-3">
-                          <p class="pb-3 mb-0 small lh-sm border-bottom">
-                            <strong class="d-block text-gray-dark">Component {{sub_key}} :</strong> {{item[val][sub_key]}}
-                          </p>
-                        </div>
-                    {%endfor%}
-                {%endif%}
-            {%endfor%}
-        </div>
-    {%endfor%}
-     <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <h6 class="border-bottom pb-2 mb-0">Formula</h6>
-         <div class="d-flex text-body-secondary pt-3">
-          <p class="pb-3 mb-0 small lh-sm border-bottom">
-            <strong class="d-block text-gray-dark">{{equation}}</strong>
-          </p>
-        </div>
-     </div>
-    <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <h6 class="border-bottom pb-2 mb-0">Result</h6>
-         <div class="d-flex text-body-secondary pt-3">
-          <p class="pb-3 mb-0 small lh-sm border-bottom">
-            <strong class="d-block text-gray-dark">{{result}}</strong>
-          </p>
-        </div>
-     </div>
+        {%endfor%}
 
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

@@ -21,6 +21,7 @@ class RegisterUserWindow(QMainWindow):
         # self.deleteUser = self.findChild(QPushButton, "userRole")
         self.addUserBtn = self.findChild(QPushButton, "addUserButton")
         self.goBackButton = self.findChild(QPushButton, "backBtn")  # "Back" button
+        self.userRolecombo.setVisible(False)
 
 
         self.userRolecombo.setItemText(0, "Select a role")
@@ -56,12 +57,12 @@ class RegisterUserWindow(QMainWindow):
         l_name = self.lastName.text()
         u_pwd = self.password.text()
         u_emailid = self.emailID.text()
-        index = self.userRolecombo.currentIndex()
+        # index = self.userRolecombo.currentIndex()
         if not f_name or not l_name or not u_pwd or not u_emailid:
             QMessageBox.warning(self, "Invalid Input", "All fields must be filled out.")
-        elif index == 0:  # Index 0 is "Select a role"
-            QMessageBox.warning(self, "Invalid Selection", "Please select a valid role.")
-            self.userRolecombo.setCurrentIndex(0)  # Reset to no selection
+        # elif index == 0:  # Index 0 is "Select a role"
+        #     QMessageBox.warning(self, "Invalid Selection", "Please select a valid role.")
+        #     self.userRolecombo.setCurrentIndex(0)  # Reset to no selection
             # self.handle_addUser
         elif not is_valid_email(u_emailid):
             QMessageBox.warning(self, "Invalid Email", "Please enter a valid email address.")
@@ -69,15 +70,16 @@ class RegisterUserWindow(QMainWindow):
             u_name = f"{f_name} {l_name}"
             # u_role = self.userRole.text()
             # userRolecombo = self.userRolecombo.text()
-            userRolecombo_value = self.userRolecombo.currentText()
+            # userRolecombo_value = self.userRolecombo.currentText()
             # Insert the user details into the database
-            self.create_user(u_name, u_pwd, u_emailid, userRolecombo_value)
+            self.create_user(u_name, u_pwd, u_emailid)
             self.goBack()
 
         # edit the below to add useres to user table
 
     @staticmethod
-    def create_user(u_name, u_pwd, u_emailid, userRolecombo_value):
+    def create_user(u_name, u_pwd, u_emailid):
+        userRolecombo_value='Guest'
         conn = get_connection()
         cursor = conn.cursor()
         cursor.execute(

@@ -4,6 +4,7 @@ from PyQt5.QtCore import QAbstractTableModel, Qt
 from PyQt5.QtGui import QIcon
 from database.db_connection import get_connection
 from models.component.create_comp import ComponentCreateWindow
+from models.component.view_component import ComponentViewWindow
 
 
 class ComponentsWindow(QWidget):
@@ -36,6 +37,7 @@ class ComponentsWindow(QWidget):
         if headers:
             headers.append("")
             headers.append("")
+            headers.append("")
         self.table.setRowCount(len(self.data))
         self.table.setColumnCount(len(headers))
         self.table.setHorizontalHeaderLabels(headers)
@@ -45,14 +47,14 @@ class ComponentsWindow(QWidget):
             for col, key in enumerate(entry):
                 self.table.setItem(row, col, QTableWidgetItem(str(entry[key])))
 
-            # Edit button (✏️)
-            edit_button = QPushButton()
-            edit_button.setIcon(QIcon("static/icons/icons-edit.png"))
-            # edit_button.setObjectName("editBtn")
-            edit_button.setFixedSize(24, 24)
-            edit_button.setStyleSheet("border: none; padding: 0px; background-color: #fff;")
-            edit_button.clicked.connect(lambda _, r=row: self.on_edit_click(r))
-            self.table.setCellWidget(row, len(entry), edit_button)
+            # # Edit button (✏️)
+            # edit_button = QPushButton()
+            # edit_button.setIcon(QIcon("static/icons/icons-edit.png"))
+            # # edit_button.setObjectName("editBtn")
+            # edit_button.setFixedSize(24, 24)
+            # edit_button.setStyleSheet("border: none; padding: 0px; background-color: #fff;")
+            # edit_button.clicked.connect(lambda _, r=row: self.on_edit_click(r))
+            # self.table.setCellWidget(row, len(entry), edit_button)
 
             # Delete button (🗑️)
             delete_button = QPushButton()
@@ -63,14 +65,21 @@ class ComponentsWindow(QWidget):
             delete_button.clicked.connect(lambda _, r=row: self.confirm_delete(r))  # FIXED LAMBDA ISSUE
             self.table.setCellWidget(row, len(entry) + 1, delete_button)
 
+            # Edit button
+            view_button = QPushButton()
+            view_button.setIcon(QIcon("static/icons/icons-edit.png"))
+            view_button.setStyleSheet("border: none; padding: 0px; background-color: #fff;")
+            view_button.clicked.connect(lambda _, r=row: self.view_project(r))  # FIXED LAMBDA ISSUE
+            self.table.setCellWidget(row, len(entry) + 2, view_button)
+
             # Configure headers for better appearance
             header = self.table.horizontalHeader()
-            # header.setSectionResizeMode(0, header.ResizeToContents)
+            header.setSectionResizeMode(0, header.ResizeToContents)
             header.setSectionResizeMode(1, header.Stretch)  # Stretch the last column
-            header.setSectionResizeMode(2, header.Stretch)  # Stretch the last column
-            header.setSectionResizeMode(3, header.Stretch)  # Stretch the last column
-            header.setSectionResizeMode(4, header.Stretch)  # Stretch the last column
-            header.setSectionResizeMode(6, header.Stretch)  # Stretch the last column
+            # header.setSectionResizeMode(2, header.Stretch)  # Stretch the last column
+            # header.setSectionResizeMode(3, header.Stretch)  # Stretch the last column
+            # header.setSectionResizeMode(4, header.Stretch)  # Stretch the last column
+            # header.setSectionResizeMode(6, header.Stretch)  # Stretch the last column
 
     def handle_create(self):
         # Navigate to the Components Create Window
@@ -89,8 +98,13 @@ class ComponentsWindow(QWidget):
         cursor.execute("SELECT * FROM components")
         columns = [desc[0] for desc in cursor.description]
         components = [dict(zip(columns, row)) for row in cursor.fetchall()]
+        results = []
+        for comp in components:
+            tmp = {'name': comp['name']}
+            if tmp not in results:
+                results.append(tmp)
         conn.close()
-        return components
+        return results
 
     def on_edit_click(self, row):
         print(f"Edit button clicked on row {row}")
@@ -111,6 +125,16 @@ class ComponentsWindow(QWidget):
 
         if result == QMessageBox.Yes:
             self.on_delete_click(row)
+
+    def view_project(self, row):
+        # print(self.data[row])
+        # self.second_window = ComponentViewWindow(self, self.main_window, row=self.data[row])
+        # self.second_window.show()
+        # self.hide()
+
+        self.second_window = ComponentCreateWindow(self, self.data[row])  # Pass self as reference
+        self.second_window.show()
+        self.hide()
 
     def on_delete_click(self, row):
         """ Remove the row from the table """

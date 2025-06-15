@@ -17,7 +17,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>Components</string>
+   <string>User Management</string>
   </property>
   <property name="inputMethodHints">
    <set>Qt::ImhNone</set>

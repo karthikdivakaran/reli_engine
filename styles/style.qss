@@ -39,3 +39,11 @@ QPushButton#createProject{
     border-radius: 5px;
     margin: 3px;
 }
+#label_sign1 {
+    font-size: 10px;
+    color: red;
+}
+#label_sign2{
+    font-size: 10px;
+    color: red;
+}

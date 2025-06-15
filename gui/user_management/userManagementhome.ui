@@ -14,7 +14,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>Components</string>
+   <string>User Management</string>
   </property>
   <widget class="QPushButton" name="addUserBtn">
    <property name="geometry">

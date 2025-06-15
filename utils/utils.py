@@ -1,7 +1,7 @@
-
+import datetime
 import json
 import shutil
-
+import math
 import pandas as pd
 from weasyprint import HTML
 from jinja2 import Environment, FileSystemLoader
@@ -30,45 +30,45 @@ def get_details_values(details):
         result = ""
     return result, equation_values
 
-def export_pdf(details):
-    env = Environment(loader=FileSystemLoader('.'))
-    template = env.get_template('template/pdf_export.html')
-    result, equation_val = get_details_values(details)
-    html_content = template.render(details=details, result=result, equation=equation_val)
-
-    # Save HTML file (optional)
-    with open("output.html", "w", encoding="utf-8") as f:
-        f.write(html_content)
+def export_pdf(details, created_data=datetime.datetime.now(), updated=datetime.datetime.now()):
+    html_content = export_to_html(details, created_data, updated)
     # Convert HTML to PDF
     HTML(string=html_content).write_pdf("output.pdf")
 
 
-def export_html(details):
+# def export_html(details):
+#     env = Environment(loader=FileSystemLoader('.'))
+#     template = env.get_template('template/pdf_export.html')
+#     result, equation_val = get_details_values(details)
+#     html_content = template.render(details=details, result=result, equation=equation_val,
+#                                    float=float, math=math, key_map=constants.key_map)
+#
+#     # Save HTML file (optional)
+#     with open("output.html", "w", encoding="utf-8") as f:
+#         f.write(html_content)
+#     # Convert HTML to PDF
+#     HTML(string=html_content).write_pdf("output.pdf")
+#     export_to_word(details)
+#     export_excel(details)
+
+def export_to_html(details, created_data, updated):
+    data = get_data_to_export(details, created_data, updated)
     env = Environment(loader=FileSystemLoader('.'))
     template = env.get_template('template/pdf_export.html')
     result, equation_val = get_details_values(details)
-    html_content = template.render(details=details, result=result, equation=equation_val)
+    html_content = template.render(details=data, result=result, equation=equation_val, enumerate=enumerate,
+                                   float=float, math=math, key_map=constants.key_map, created_data=created_data,
+                                   updated=updated)
 
     # Save HTML file (optional)
     with open("output.html", "w", encoding="utf-8") as f:
         f.write(html_content)
-    # Convert HTML to PDF
-    HTML(string=html_content).write_pdf("output.pdf")
-    export_to_word(details)
-    export_excel(details)
+    return html_content
 
-def export_to_word(details):
-    env = Environment(loader=FileSystemLoader('.'))
-    template = env.get_template('template/pdf_export.html')
-    result, equation_val = get_details_values(details)
-    html_content = template.render(details=details, result=result, equation=equation_val)
-
-    # Save HTML file (optional)
-    with open("output.html", "w", encoding="utf-8") as f:
-        f.write(html_content)
+def export_to_word(details, created_data=datetime.datetime.now(), updated=datetime.datetime.now()):
+    html_content = export_to_html(details, created_data, updated)
     # Create a new Word Document
     document = Document()
-
     # Parse HTML content
     soup = BeautifulSoup(html_content, "html.parser")
 
@@ -91,39 +91,66 @@ def export_to_word(details):
     # Save Word file
     document.save("output.docx")
 
-def export_excel(details, filename="output.xlsx"):
-    data = []
+def get_data_to_export(details, created_data, updated):
+    data = [[f"Failure Rate Calculation for {details['name'].capitalize()}"]]
+    data.append(["Created Date", created_data])
+    data.append(["Updated Date", updated])
     keys = []
+    for item in details["additional_data"]:
+        for it_key, it_val in item.items():
+            if it_key not in keys:
+                data.append([it_key.capitalize(), it_val, "", "", "", "", "", "", "", "", "", ""])
+                keys.append(it_key)
     for key in details:
+        if key in ["additional_data"]:
+            continue
+        key_value = key
+        if key in constants.key_map:
+            key_value = constants.key_map[key]
         if type(details[key]) == str:
             if key not in keys:
-                data.append([key.capitalize(), details[key],"","","","","","","","","",""])
+                data.append([key_value.capitalize(), details[key], "", "", "", "", "", "", "", "", "", ""])
                 keys.append(key)
         elif type(details[key]) == list:
             for item in details[key]:
                 for it_key, it_val in item.items():
                     if it_key not in keys:
-                        data.append([it_key.capitalize(), it_val,"","","","","","","","","",""])
+                        data.append([it_key.capitalize(), it_val, "", "", "", "", "", "", "", "", "", ""])
                         keys.append(it_key)
         elif type(details[key]) == dict:
             for key_item, key_data in details[key].items():
                 temp = []
                 # temp.append(key_item)
-                temp.append(f"{key_item} = {key_data['value']}")
+                temp.extend([key_item, key_data['value']])
                 if "deps" in key_data:
+                    temp.extend(["", "", "", "", "", "", "", ""])
+                    data.append(temp)
                     for sub_key in key_data['deps']:
-                        key_value = sub_key
-                        if sub_key in constants.key_map:
-                            key_value = constants.key_map[sub_key]
-                        temp.append(f"{key_value} = {key_data['deps'][sub_key]}")
-                temp.extend(["","","","","","","",""])
-                data.append(temp)
+                        temp = []
+                        if sub_key not in keys:
+                            key_value = sub_key
+                            if sub_key in constants.key_map:
+                                key_value = constants.key_map[sub_key]
+                            temp.extend([key_value, key_data['deps'][sub_key]])
+                            keys.append(sub_key)
+                            temp.extend(["", "", "", "", "", "", "", ""])
+                            data.append(temp)
+                else:
+                    data.append([key_item, key_data["value"],"", "", "", ""])
     result = ""
 
     for key, item in details['values'].items():
         result += f" {item['value']} *"
     result = eval(result[:-1])
-    data.append([f"Result = {result}"])
+    data.append(["Failure Rate λ", result])
+    data.append([f"Reliability Calculation for {details['name']}"])
+    data.append(["R(t)", "e^{-λt}"])
+    data.append(["Reliability", math.exp(-(result * (10 ** -9)) * float(details['duration']))])
+    return data
+
+def export_excel(details, filename="output.xlsx", created_data=datetime.datetime.now(), updated=datetime.datetime.now()):
+
+    data = get_data_to_export(details, created_data=created_data, updated=updated)
 
     df = pd.DataFrame(data)
     df.to_excel(filename, index=False)
@@ -187,7 +214,7 @@ def download_word(window):
     source_path = "output.docx"
 
     # Ask user where to save it
-    save_path, _ = QFileDialog.getSaveFileName(window, "Save Excel File", "excel_report.docx", "Word Files (*.docx);;All Files (*)")
+    save_path, _ = QFileDialog.getSaveFileName(window, "Save Word File", "word_report.docx", "Word Files (*.docx);;All Files (*)")
 
     if save_path:
         try:
@@ -195,3 +222,21 @@ def download_word(window):
             print(f"File saved to: {save_path}")
         except Exception as e:
             print(f"Error saving file: {e}")
+
+
+def append_to_json_file(new_object, file_path="component_configuration.json"):
+    try:
+        # Read existing data
+        with open(file_path, 'r') as file:
+            data = json.load(file)
+            if not isinstance(data, dict):
+                raise ValueError("JSON root is not a dict.")
+    except (FileNotFoundError, json.JSONDecodeError):
+        # If file doesn't exist or is empty, start with an empty list
+        data = {"components": {}}
+
+    # update object
+    data["components"][new_object['name']] = new_object
+    # Write back to the file
+    with open(file_path, 'w') as file:
+        json.dump(data, file, indent=2)

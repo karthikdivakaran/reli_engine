@@ -6,5 +6,12 @@ exclude_options = ["Select Component", "Select Option", ""]
 
 key_map = {
     "theetta1": "Reference Temperature",
-    "theetta2": "Operational Temperature"
+    "theetta2": "Operational Temperature",
+    "formula": "Failure Rate λ"
 }
+
+equ_map = {
+    "Reference Temperature": "theetta1",
+    "Operational Temperature": "theetta2"
+}
+

